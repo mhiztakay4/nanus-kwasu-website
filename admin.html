@@ -1,0 +1,2229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NANUS Admin Dashboard</title>
+
+<style>
+:root{
+  --g:#087f3e;
+  --deep:#06351e;
+  --bg:#f4f7f5;
+  --line:#e0e8e3;
+  --muted:#68746e
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:#102019
+}
+
+.top{
+  background:var(--deep);
+  color:#fff;
+  padding:15px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+
+.top a{
+  color:#fff;
+  text-decoration:none
+}
+
+.wrap{
+  width:min(1050px,92%);
+  margin:28px auto
+}
+
+.panel{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:24px;
+  margin-bottom:18px
+}
+
+h1{
+  margin-top:0
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px
+}
+
+.stat{
+  padding:20px;
+  border:1px solid var(--line);
+  border-radius:12px
+}
+
+.stat b{
+  font-size:28px;
+  color:var(--g)
+}
+
+label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin:12px 0 5px
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  padding:11px;
+  border:1px solid #ccd8d2;
+  border-radius:8px;
+  font:inherit
+}
+
+textarea{
+  min-height:110px
+}
+
+input[type="checkbox"]{
+  width:auto;
+  margin-right:6px
+}
+
+input[type="file"]{
+  padding:9px;
+  background:#fafcfa
+}
+
+.btn{
+  border:0;
+  background:var(--g);
+  color:#fff;
+  padding:11px 15px;
+  border-radius:8px;
+  font-weight:800;
+  cursor:pointer;
+  margin-top:12px
+}
+
+.btn:disabled{
+  opacity:.6;
+  cursor:not-allowed
+}
+
+.btn.alt{
+  background:#66736d
+}
+
+.btn.danger{
+  background:#9d2c2c
+}
+
+.row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap
+}
+
+.item{
+  padding:15px 0;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  gap:15px
+}
+
+.hidden{
+  display:none
+}
+
+.muted{
+  color:var(--muted);
+  font-size:13px
+}
+
+.notice{
+  padding:13px;
+  border-radius:9px;
+  background:#eef6f1;
+  margin:10px 0
+}
+
+.error{
+  background:#fff0f0;
+  color:#8b2525
+}
+
+/* NEWS IMAGE PREVIEW */
+
+.news-preview{
+  width:100%;
+  max-width:500px;
+  margin-top:12px;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:#f5f7f6
+}
+
+.news-preview img{
+  width:100%;
+  display:block;
+  max-height:300px;
+  object-fit:cover
+}
+
+/* GALLERY */
+
+.gallery-preview{
+  width:100%;
+  max-width:400px;
+  margin-top:12px;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:#f5f7f6
+}
+
+.gallery-preview img{
+  width:100%;
+  display:block;
+  max-height:280px;
+  object-fit:cover
+}
+
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:15px
+}
+
+.gallery-card{
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+  background:#fff
+}
+
+.gallery-card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  display:block
+}
+
+.gallery-info{
+  padding:12px
+}
+
+.gallery-info strong{
+  display:block;
+  margin-bottom:5px
+}
+
+@media(max-width:750px){
+
+  .grid{
+    grid-template-columns:1fr 1fr
+  }
+
+  .top{
+    gap:10px
+  }
+
+  .item{
+    display:block
+  }
+
+  .gallery-grid{
+    grid-template-columns:1fr 1fr
+  }
+
+}
+
+@media(max-width:480px){
+
+  .grid{
+    grid-template-columns:1fr
+  }
+
+  .gallery-grid{
+    grid-template-columns:1fr
+  }
+
+  .gallery-card img{
+    height:220px
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="top">
+  <strong>NANUS KWASU • ADMIN</strong>
+  <a href="index.html">View Website →</a>
+</div>
+
+<div class="wrap">
+
+<!-- LOGIN -->
+<div id="login" class="panel">
+
+<h1>Admin Login</h1>
+
+<p class="muted">
+Use an authorized NANUS administrator account.
+</p>
+
+<label for="email">Email</label>
+
+<input
+  id="email"
+  type="email"
+  autocomplete="email"
+  placeholder="Enter admin email"
+>
+
+<label for="password">Password</label>
+
+<input
+  id="password"
+  type="password"
+  autocomplete="current-password"
+  placeholder="Enter password"
+>
+
+<button
+  class="btn"
+  id="loginBtn"
+>
+Sign in
+</button>
+
+<div id="loginMsg" class="muted"></div>
+
+</div>
+
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="hidden">
+
+<div class="panel">
+
+<div class="row">
+
+<h1 style="margin-right:auto">
+Content Dashboard
+</h1>
+
+<button
+  class="btn alt"
+  id="logoutBtn"
+>
+Sign out
+</button>
+
+</div>
+
+<div id="msg" class="notice hidden"></div>
+
+<div class="grid">
+
+<div class="stat">
+<span>Published news</span>
+<br>
+<b id="newsCount">0</b>
+</div>
+
+<div class="stat">
+<span>Published events</span>
+<br>
+<b id="eventCount">0</b>
+</div>
+
+<div class="stat">
+<span>Gallery photos</span>
+<br>
+<b id="galleryCount">0</b>
+</div>
+
+<div class="stat">
+<span>Admin status</span>
+<br>
+<b>Active</b>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- CREATE NEWS -->
+<div class="panel">
+
+<h2>Create News Post</h2>
+
+<label for="postTitle">
+Title
+</label>
+
+<input
+  id="postTitle"
+  type="text"
+  placeholder="News title"
+>
+
+<label for="postCategory">
+Category
+</label>
+
+<input
+  id="postCategory"
+  type="text"
+  placeholder="Announcement"
+>
+
+<label for="postExcerpt">
+Excerpt
+</label>
+
+<textarea
+  id="postExcerpt"
+  placeholder="Short description"
+></textarea>
+
+<label for="postBody">
+Body
+</label>
+
+<textarea
+  id="postBody"
+  placeholder="Full article text"
+></textarea>
+
+<!-- NEWS IMAGE -->
+
+<label for="postImage">
+News Image
+</label>
+
+<input
+  id="postImage"
+  type="file"
+  accept="image/*"
+>
+
+<div
+  id="postImagePreview"
+  class="news-preview hidden"
+>
+<img
+  id="postPreviewImage"
+  alt="Selected news image preview"
+>
+</div>
+
+<label>
+<input
+  id="postPublished"
+  type="checkbox"
+>
+Publish immediately
+</label>
+
+<button
+  class="btn"
+  id="addPost"
+>
+Add News
+</button>
+
+</div>
+
+
+<!-- CREATE EVENT -->
+<div class="panel">
+
+<h2>Create Event</h2>
+
+<label for="eventTitle">
+Event title
+</label>
+
+<input
+  id="eventTitle"
+  type="text"
+  placeholder="Event title"
+>
+
+<label for="eventDate">
+Date
+</label>
+
+<input
+  id="eventDate"
+  type="date"
+>
+
+<label for="eventDescription">
+Description
+</label>
+
+<textarea
+  id="eventDescription"
+  placeholder="Event description"
+></textarea>
+
+<label>
+<input
+  id="eventPublished"
+  type="checkbox"
+>
+Publish immediately
+</label>
+
+<button
+  class="btn"
+  id="addEvent"
+>
+Add Event
+</button>
+
+</div>
+
+
+<!-- GALLERY MANAGER -->
+<div class="panel">
+
+<h2>Gallery Manager</h2>
+
+<p class="muted">
+Upload photos of NANUS activities, cultural events, meetings and other chapter activities.
+</p>
+
+<label for="galleryImage">
+Select Photo
+</label>
+
+<input
+  id="galleryImage"
+  type="file"
+  accept="image/*"
+>
+
+<div
+  id="galleryPreview"
+  class="gallery-preview hidden"
+>
+<img
+  id="previewImage"
+  alt="Selected image preview"
+>
+</div>
+
+<label for="galleryTitle">
+Photo Title / Caption
+</label>
+
+<input
+  id="galleryTitle"
+  type="text"
+  placeholder="e.g. NANUS Annual Nupe Day"
+>
+
+<label>
+<input
+  id="galleryPublished"
+  type="checkbox"
+  checked
+>
+Publish immediately
+</label>
+
+<button
+  class="btn"
+  id="uploadGallery"
+>
+Upload Photo
+</button>
+
+</div>
+
+
+<!-- GALLERY LIST -->
+<div class="panel">
+
+<div class="row">
+
+<h2 style="margin-right:auto">
+Gallery Photos
+</h2>
+
+<button
+  class="btn alt"
+  id="refreshGallery"
+>
+Refresh
+</button>
+
+</div>
+
+<div id="galleryList">
+
+<p class="muted">
+No gallery photos yet.
+</p>
+
+</div>
+
+</div>
+
+
+<!-- NEWS -->
+<div class="panel">
+
+<h2>Recent News</h2>
+
+<div id="posts">
+
+<p class="muted">
+No posts yet.
+</p>
+
+</div>
+
+</div>
+
+
+<!-- EVENTS -->
+<div class="panel">
+
+<h2>Upcoming Events</h2>
+
+<div id="events">
+
+<p class="muted">
+No events yet.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+/* =========================================
+   SUPABASE CONFIGURATION
+========================================= */
+
+const SUPABASE_URL =
+  "https://risxjzdxrtzhlkwxhhzm.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_x9ZKrx8ilp1_Nj4F8U_i5A__eTKwWFx";
+
+
+let db = null;
+
+const $ = id =>
+  document.getElementById(id);
+
+
+/* =========================================
+   START SUPABASE
+========================================= */
+
+function startSupabase(){
+
+  try{
+
+    db =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+    $("loginBtn").disabled = false;
+
+    checkSession();
+
+  }catch(error){
+
+    console.error(error);
+
+    $("loginMsg").textContent =
+      "Unable to connect to Supabase.";
+
+  }
+
+}
+
+
+/* =========================================
+   CHECK SESSION
+========================================= */
+
+async function checkSession(){
+
+  if(!db) return;
+
+  const {
+    data,
+    error
+  } =
+    await db.auth.getSession();
+
+  if(error){
+
+    console.error(error);
+
+    return;
+
+  }
+
+  if(data.session){
+
+    openDash();
+
+  }
+
+}
+
+
+/* =========================================
+   OPEN DASHBOARD
+========================================= */
+
+async function openDash(){
+
+  $("login").classList.add("hidden");
+
+  $("dashboard").classList.remove("hidden");
+
+  await load();
+
+}
+
+
+/* =========================================
+   CLOSE DASHBOARD
+========================================= */
+
+function closeDash(){
+
+  $("login").classList.remove("hidden");
+
+  $("dashboard").classList.add("hidden");
+
+}
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+$("loginBtn").onclick =
+async function(){
+
+  if(!db){
+
+    $("loginMsg").textContent =
+      "Supabase is not connected.";
+
+    return;
+
+  }
+
+  const email =
+    $("email").value.trim();
+
+  const password =
+    $("password").value;
+
+
+  if(!email || !password){
+
+    $("loginMsg").textContent =
+      "Please enter your email and password.";
+
+    return;
+
+  }
+
+
+  $("loginBtn").disabled = true;
+
+  $("loginMsg").textContent =
+    "Signing in...";
+
+
+  const {
+    data,
+    error
+  } =
+    await db.auth.signInWithPassword({
+
+      email:email,
+
+      password:password
+
+    });
+
+
+  if(error){
+
+    console.error(error);
+
+    $("loginMsg").textContent =
+      error.message;
+
+    $("loginBtn").disabled = false;
+
+    return;
+
+  }
+
+
+  $("loginMsg").textContent =
+    "Login successful.";
+
+  await openDash();
+
+  $("loginBtn").disabled = false;
+
+};
+
+
+/* =========================================
+   AUTH STATE
+========================================= */
+
+function listenAuth(){
+
+  if(!db) return;
+
+  db.auth.onAuthStateChange(
+    (_event,session)=>{
+
+      if(session){
+
+        openDash();
+
+      }else{
+
+        closeDash();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+$("logoutBtn").onclick =
+async function(){
+
+  const {
+    error
+  } =
+    await db.auth.signOut();
+
+
+  if(error){
+
+    showMessage(
+      error.message,
+      true
+    );
+
+  }
+
+};
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showMessage(
+  message,
+  isError=false
+){
+
+  const box =
+    $("msg");
+
+  box.textContent =
+    message;
+
+  box.className =
+    isError
+    ? "notice error"
+    : "notice";
+
+  box.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+/* =========================================
+   NEWS IMAGE PREVIEW
+========================================= */
+
+$("postImage").addEventListener(
+  "change",
+  function(){
+
+    const file =
+      this.files[0];
+
+    if(!file){
+
+      $("postImagePreview")
+        .classList.add("hidden");
+
+      $("postPreviewImage").src = "";
+
+      return;
+
+    }
+
+
+    if(!file.type.startsWith("image/")){
+
+      showMessage(
+        "Please select a valid image file.",
+        true
+      );
+
+      this.value = "";
+
+      return;
+
+    }
+
+
+    const reader =
+      new FileReader();
+
+    reader.onload =
+      function(e){
+
+        $("postPreviewImage").src =
+          e.target.result;
+
+        $("postImagePreview")
+          .classList.remove("hidden");
+
+      };
+
+    reader.readAsDataURL(file);
+
+  }
+);
+
+
+/* =========================================
+   ADD NEWS
+========================================= */
+
+$("addPost").onclick =
+async function(){
+
+  const title =
+    $("postTitle").value.trim();
+
+  const category =
+    $("postCategory").value.trim()
+    || "News";
+
+  const excerpt =
+    $("postExcerpt").value.trim();
+
+  const body =
+    $("postBody").value.trim();
+
+  const imageFile =
+    $("postImage").files[0];
+
+  const published =
+    $("postPublished").checked;
+
+
+  if(!title){
+
+    showMessage(
+      "Please enter a news title.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  const {
+    data:{user}
+  } =
+    await db.auth.getUser();
+
+
+  if(!user){
+
+    showMessage(
+      "Please sign in again.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  $("addPost").disabled =
+    true;
+
+  $("addPost").textContent =
+    imageFile
+    ? "Uploading..."
+    : "Saving...";
+
+
+  let imageUrl = null;
+
+  let uploadedFilePath = null;
+
+
+  try{
+
+    /* UPLOAD NEWS IMAGE */
+
+    if(imageFile){
+
+      if(!imageFile.type.startsWith("image/")){
+
+        throw new Error(
+          "Please select a valid image file."
+        );
+
+      }
+
+
+      const extension =
+        imageFile.name
+          .split(".")
+          .pop()
+          .toLowerCase();
+
+
+      const fileName =
+        Date.now()
+        + "-"
+        + Math.random()
+            .toString(36)
+            .substring(2,8)
+        + "."
+        + extension;
+
+
+      uploadedFilePath =
+        fileName;
+
+
+      const {
+        error:uploadError
+      } =
+        await db
+          .storage
+          .from("news-images")
+          .upload(
+            uploadedFilePath,
+            imageFile,
+            {
+              cacheControl:"3600",
+              upsert:false,
+              contentType:imageFile.type
+            }
+          );
+
+
+      if(uploadError){
+
+        throw new Error(
+          "News image upload failed: "
+          + uploadError.message
+        );
+
+      }
+
+
+      const {
+        data:publicData
+      } =
+        db
+          .storage
+          .from("news-images")
+          .getPublicUrl(
+            uploadedFilePath
+          );
+
+
+      imageUrl =
+        publicData.publicUrl;
+
+    }
+
+
+    /* SAVE NEWS POST */
+
+    const {
+      error
+    } =
+    await db
+      .from("posts")
+      .insert({
+
+        title:title,
+
+        category:category,
+
+        excerpt:excerpt,
+
+        body:body,
+
+        published:published,
+
+        author_id:user.id,
+
+        image_url:imageUrl
+
+      });
+
+
+    if(error){
+
+      /* REMOVE IMAGE IF DATABASE SAVE FAILS */
+
+      if(uploadedFilePath){
+
+        await db
+          .storage
+          .from("news-images")
+          .remove([
+            uploadedFilePath
+          ]);
+
+      }
+
+
+      throw new Error(
+        "Could not save news: "
+        + error.message
+      );
+
+    }
+
+
+    showMessage(
+      "News post saved successfully."
+    );
+
+
+    /* RESET FORM */
+
+    $("postTitle").value = "";
+
+    $("postCategory").value = "";
+
+    $("postExcerpt").value = "";
+
+    $("postBody").value = "";
+
+    $("postImage").value = "";
+
+    $("postPublished").checked =
+      false;
+
+    $("postImagePreview")
+      .classList.add("hidden");
+
+    $("postPreviewImage").src = "";
+
+
+    await load();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      error.message,
+      true
+    );
+
+  }
+
+
+  $("addPost").disabled =
+    false;
+
+  $("addPost").textContent =
+    "Add News";
+
+};
+
+
+/* =========================================
+   ADD EVENT
+========================================= */
+
+$("addEvent").onclick =
+async function(){
+
+  const title =
+    $("eventTitle").value.trim();
+
+  const date =
+    $("eventDate").value;
+
+  const description =
+    $("eventDescription")
+      .value.trim();
+
+  const published =
+    $("eventPublished").checked;
+
+
+  if(!title){
+
+    showMessage(
+      "Please enter an event title.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  const {
+    data:{user}
+  } =
+    await db.auth.getUser();
+
+
+  if(!user){
+
+    showMessage(
+      "Please sign in again.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  const {
+    error
+  } =
+    await db
+      .from("events")
+      .insert({
+
+        title:title,
+
+        event_date:
+          date || null,
+
+        description:
+          description,
+
+        published:
+          published,
+
+        author_id:
+          user.id
+
+      });
+
+
+  if(error){
+
+    console.error(error);
+
+    showMessage(
+      "Could not save event: "
+      + error.message,
+      true
+    );
+
+    return;
+
+  }
+
+
+  showMessage(
+    "Event saved successfully."
+  );
+
+
+  $("eventTitle").value = "";
+
+  $("eventDate").value = "";
+
+  $("eventDescription").value = "";
+
+  $("eventPublished").checked =
+    false;
+
+
+  await load();
+
+};
+
+
+/* =========================================
+   GALLERY IMAGE PREVIEW
+========================================= */
+
+$("galleryImage").addEventListener(
+  "change",
+  function(){
+
+    const file =
+      this.files[0];
+
+    if(!file){
+
+      $("galleryPreview")
+        .classList.add("hidden");
+
+      return;
+
+    }
+
+    if(!file.type.startsWith("image/")){
+
+      showMessage(
+        "Please select an image file.",
+        true
+      );
+
+      this.value = "";
+
+      return;
+
+    }
+
+    const reader =
+      new FileReader();
+
+    reader.onload =
+      function(e){
+
+        $("previewImage").src =
+          e.target.result;
+
+        $("galleryPreview")
+          .classList.remove("hidden");
+
+      };
+
+    reader.readAsDataURL(file);
+
+  }
+);
+
+
+/* =========================================
+   UPLOAD GALLERY PHOTO
+========================================= */
+
+$("uploadGallery").onclick =
+async function(){
+
+  const file =
+    $("galleryImage").files[0];
+
+  const title =
+    $("galleryTitle").value.trim();
+
+  const published =
+    $("galleryPublished").checked;
+
+
+  if(!file){
+
+    showMessage(
+      "Please select a photo first.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  if(!file.type.startsWith("image/")){
+
+    showMessage(
+      "Please select a valid image file.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  const {
+    data:{user}
+  } =
+    await db.auth.getUser();
+
+
+  if(!user){
+
+    showMessage(
+      "Please sign in again.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  $("uploadGallery").disabled =
+    true;
+
+  $("uploadGallery").textContent =
+    "Uploading...";
+
+
+  try{
+
+    const extension =
+      file.name
+        .split(".")
+        .pop()
+        .toLowerCase();
+
+    const fileName =
+      Date.now()
+      + "-"
+      + Math.random()
+          .toString(36)
+          .substring(2,8)
+      + "."
+      + extension;
+
+
+    const filePath =
+      fileName;
+
+
+    const {
+      error:uploadError
+    } =
+      await db
+        .storage
+        .from("gallery")
+        .upload(
+          filePath,
+          file,
+          {
+            cacheControl:"3600",
+            upsert:false,
+            contentType:file.type
+          }
+        );
+
+
+    if(uploadError){
+
+      console.error(uploadError);
+
+      throw new Error(
+        "Image upload failed: "
+        + uploadError.message
+      );
+
+    }
+
+
+    const {
+      data:publicData
+    } =
+      db
+        .storage
+        .from("gallery")
+        .getPublicUrl(filePath);
+
+
+    const imageUrl =
+      publicData.publicUrl;
+
+
+    const {
+      error:databaseError
+    } =
+      await db
+        .from("gallery")
+        .insert({
+
+          title:
+            title || "NANUS Activity",
+
+          image_url:
+            imageUrl,
+
+          published:
+            published,
+
+          author_id:
+            user.id
+
+        });
+
+
+    if(databaseError){
+
+      console.error(databaseError);
+
+      await db
+        .storage
+        .from("gallery")
+        .remove([filePath]);
+
+      throw new Error(
+        "Could not save gallery information: "
+        + databaseError.message
+      );
+
+    }
+
+
+    showMessage(
+      "Gallery photo uploaded successfully."
+    );
+
+
+    $("galleryImage").value = "";
+
+    $("galleryTitle").value = "";
+
+    $("galleryPublished").checked =
+      true;
+
+    $("galleryPreview")
+      .classList.add("hidden");
+
+    $("previewImage").src = "";
+
+
+    await loadGallery();
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      error.message,
+      true
+    );
+
+  }
+
+
+  $("uploadGallery").disabled =
+    false;
+
+  $("uploadGallery").textContent =
+    "Upload Photo";
+
+};
+
+
+/* =========================================
+   LOAD GALLERY
+========================================= */
+
+async function loadGallery(){
+
+  if(!db) return;
+
+
+  const {
+    data,
+    error
+  } =
+    await db
+      .from("gallery")
+      .select("*")
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+  if(error){
+
+    console.error(error);
+
+    $("galleryList").innerHTML =
+      '<p class="muted">Unable to load gallery.</p>';
+
+    return;
+
+  }
+
+
+  const gallery =
+    data || [];
+
+
+  $("galleryCount").textContent =
+    gallery.filter(
+      x=>x.published
+    ).length;
+
+
+  if(!gallery.length){
+
+    $("galleryList").innerHTML =
+      '<p class="muted">No gallery photos yet.</p>';
+
+    return;
+
+  }
+
+
+  $("galleryList").innerHTML =
+
+    '<div class="gallery-grid">' +
+
+    gallery.map(
+      x=>`
+
+      <div class="gallery-card">
+
+        <img
+          src="${esc(x.image_url)}"
+          alt="${esc(
+            x.title || "NANUS Gallery"
+          )}"
+          loading="lazy"
+        >
+
+        <div class="gallery-info">
+
+          <strong>
+            ${esc(
+              x.title || "NANUS Activity"
+            )}
+          </strong>
+
+          <span class="muted">
+
+            ${
+              x.published
+              ? "Published"
+              : "Draft"
+            }
+
+          </span>
+
+          <br>
+
+          <button
+            class="btn danger"
+            onclick="delGallery('${x.id}','${encodeURIComponent(x.image_url || "")}')"
+          >
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+
+      `
+    ).join("") +
+
+    "</div>";
+
+}
+
+
+/* =========================================
+   DELETE GALLERY PHOTO
+========================================= */
+
+async function delGallery(
+  id,
+  encodedUrl
+){
+
+  if(
+    !confirm(
+      "Delete this gallery photo?"
+    )
+  ) return;
+
+
+  const imageUrl =
+    decodeURIComponent(
+      encodedUrl
+    );
+
+
+  try{
+
+    const marker =
+      "/storage/v1/object/public/gallery/";
+
+    const position =
+      imageUrl.indexOf(marker);
+
+
+    if(position !== -1){
+
+      const filePath =
+        imageUrl
+          .substring(
+            position + marker.length
+          );
+
+
+      const {
+        error:storageError
+      } =
+        await db
+          .storage
+          .from("gallery")
+          .remove([
+            filePath
+          ]);
+
+
+      if(storageError){
+
+        console.error(
+          storageError
+        );
+
+        showMessage(
+          "Could not delete image from Storage: "
+          + storageError.message,
+          true
+        );
+
+        return;
+
+      }
+
+    }
+
+
+    const {
+      error
+    } =
+      await db
+        .from("gallery")
+        .delete()
+        .eq(
+          "id",
+          id
+        );
+
+
+    if(error){
+
+      console.error(error);
+
+      showMessage(
+        "Could not delete gallery record: "
+        + error.message,
+        true
+      );
+
+      return;
+
+    }
+
+
+    showMessage(
+      "Gallery photo deleted."
+    );
+
+
+    await loadGallery();
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "Could not delete gallery photo: "
+      + error.message,
+      true
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   REFRESH GALLERY
+========================================= */
+
+$("refreshGallery").onclick =
+async function(){
+
+  await loadGallery();
+
+};
+
+
+/* =========================================
+   LOAD CONTENT
+========================================= */
+
+async function load(){
+
+  if(!db) return;
+
+
+  const postsResult =
+    await db
+      .from("posts")
+      .select("*")
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      )
+      .limit(20);
+
+
+  const eventsResult =
+    await db
+      .from("events")
+      .select("*")
+      .order(
+        "event_date",
+        {
+          ascending:true
+        }
+      )
+      .limit(20);
+
+
+  /* NEWS */
+
+  if(postsResult.error){
+
+    console.error(
+      postsResult.error
+    );
+
+    $("posts").innerHTML =
+      '<p class="muted">Unable to load news.</p>';
+
+  }else{
+
+    const posts =
+      postsResult.data || [];
+
+
+    $("newsCount").textContent =
+      posts.filter(
+        x=>x.published
+      ).length;
+
+
+    $("posts").innerHTML =
+      posts.map(
+        x=>`
+
+        <div class="item">
+
+          <div>
+
+            <strong>
+              ${esc(x.title)}
+            </strong>
+
+            <br>
+
+            <span class="muted">
+
+              ${esc(
+                x.category || "News"
+              )}
+
+              •
+
+              ${
+                x.published
+                ? "Published"
+                : "Draft"
+              }
+
+            </span>
+
+          </div>
+
+
+          <button
+            class="btn danger"
+            onclick="delPost('${x.id}')"
+          >
+            Delete
+          </button>
+
+        </div>
+
+        `
+      ).join("")
+
+      ||
+
+      '<p class="muted">No posts yet.</p>';
+
+  }
+
+
+  /* EVENTS */
+
+  if(eventsResult.error){
+
+    console.error(
+      eventsResult.error
+    );
+
+    $("events").innerHTML =
+      '<p class="muted">Unable to load events.</p>';
+
+  }else{
+
+    const events =
+      eventsResult.data || [];
+
+
+    $("eventCount").textContent =
+      events.filter(
+        x=>x.published
+      ).length;
+
+
+    $("events").innerHTML =
+      events.map(
+        x=>`
+
+        <div class="item">
+
+          <div>
+
+            <strong>
+              ${esc(x.title)}
+            </strong>
+
+            <br>
+
+            <span class="muted">
+
+              ${esc(
+                x.event_date || "No date"
+              )}
+
+              •
+
+              ${
+                x.published
+                ? "Published"
+                : "Draft"
+              }
+
+            </span>
+
+          </div>
+
+
+          <button
+            class="btn danger"
+            onclick="delEvent('${x.id}')"
+          >
+            Delete
+          </button>
+
+        </div>
+
+        `
+      ).join("")
+
+      ||
+
+      '<p class="muted">No events yet.</p>';
+
+  }
+
+
+  await loadGallery();
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function esc(value){
+
+  return String(
+    value ?? ""
+  ).replace(
+    /[&<>"']/g,
+
+    m=>({
+
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+
+    }[m])
+
+  );
+
+}
+
+
+/* =========================================
+   DELETE NEWS
+========================================= */
+
+async function delPost(id){
+
+  if(
+    !confirm(
+      "Delete this post?"
+    )
+  ) return;
+
+
+  try{
+
+    /* GET POST IMAGE URL */
+
+    const {
+      data:post,
+      error:fetchError
+    } =
+      await db
+        .from("posts")
+        .select("image_url")
+        .eq("id",id)
+        .single();
+
+
+    if(fetchError){
+
+      console.error(fetchError);
+
+    }
+
+
+    /* DELETE NEWS IMAGE FROM STORAGE */
+
+    if(post && post.image_url){
+
+      const marker =
+        "/storage/v1/object/public/news-images/";
+
+      const position =
+        post.image_url.indexOf(marker);
+
+
+      if(position !== -1){
+
+        const filePath =
+          post.image_url
+            .substring(
+              position + marker.length
+            );
+
+
+        const {
+          error:storageError
+        } =
+          await db
+            .storage
+            .from("news-images")
+            .remove([
+              filePath
+            ]);
+
+
+        if(storageError){
+
+          console.error(
+            storageError
+          );
+
+          showMessage(
+            "Could not delete news image: "
+            + storageError.message,
+            true
+          );
+
+          return;
+
+        }
+
+      }
+
+    }
+
+
+    /* DELETE NEWS RECORD */
+
+    const {
+      error
+    } =
+      await db
+        .from("posts")
+        .delete()
+        .eq(
+          "id",
+          id
+        );
+
+
+    if(error){
+
+      showMessage(
+        "Could not delete post: "
+        + error.message,
+        true
+      );
+
+      return;
+
+    }
+
+
+    showMessage(
+      "News post deleted."
+    );
+
+
+    await load();
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "Could not delete post: "
+      + error.message,
+      true
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   DELETE EVENT
+========================================= */
+
+async function delEvent(id){
+
+  if(
+    !confirm(
+      "Delete this event?"
+    )
+  ) return;
+
+
+  const {
+    error
+  } =
+    await db
+      .from("events")
+      .delete()
+      .eq(
+        "id",
+        id
+      );
+
+
+  if(error){
+
+    showMessage(
+      "Could not delete event: "
+      + error.message,
+      true
+    );
+
+    return;
+
+  }
+
+
+  showMessage(
+    "Event deleted."
+  );
+
+
+  await load();
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+startSupabase();
+
+listenAuth();
+
+</script>
+
+</body>
+</html>

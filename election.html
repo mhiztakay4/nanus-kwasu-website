@@ -1,0 +1,1929 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<title>NANUS Election Portal</title>
+
+<style>
+:root{
+  --green:#087f3e;
+  --deep:#06351e;
+  --gold:#e0b52f;
+  --bg:#f4f7f5;
+  --line:#e1e8e4;
+  --muted:#68746e;
+  --danger:#a52b2b;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  width:100%;
+  overflow-x:hidden;
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  width:100%;
+  min-width:0;
+  overflow-x:hidden;
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:#102019;
+  -webkit-text-size-adjust:100%;
+}
+
+/* =========================
+   TOP HEADER
+========================= */
+
+.top{
+  width:100%;
+  background:var(--deep);
+  color:white;
+  padding:16px 5%;
+  line-height:1.6;
+}
+
+.top strong{
+  font-size:16px;
+}
+
+.motto{
+  color:var(--gold);
+  font-weight:900;
+}
+
+/* =========================
+   MAIN WRAPPER
+========================= */
+
+.wrap{
+  width:100%;
+  max-width:950px;
+  margin:40px auto;
+  padding:0 5%;
+}
+
+.box{
+  width:100%;
+  background:white;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:30px;
+  box-shadow:0 10px 30px #0b2b1810;
+}
+
+/* =========================
+   TEXT
+========================= */
+
+h1{
+  margin-top:0;
+  font-size:38px;
+  line-height:1.15;
+  overflow-wrap:anywhere;
+}
+
+h2{
+  margin-top:25px;
+  line-height:1.25;
+  overflow-wrap:anywhere;
+}
+
+h3{
+  line-height:1.3;
+  overflow-wrap:anywhere;
+}
+
+p{
+  overflow-wrap:anywhere;
+}
+
+.intro{
+  color:var(--muted);
+  line-height:1.6;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+  display:inline-block;
+  max-width:100%;
+  padding:10px 14px;
+  border-radius:30px;
+  font-weight:800;
+  background:#edf2ef;
+  color:#56635d;
+  overflow-wrap:anywhere;
+}
+
+.status.open{
+  background:#e8f5ed;
+  color:var(--green);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:46px;
+  background:var(--green);
+  color:white;
+  padding:12px 17px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:800;
+  border:0;
+  cursor:pointer;
+  margin-top:15px;
+  font-size:15px;
+  line-height:1.25;
+  text-align:center;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.btn:hover{
+  opacity:.9;
+}
+
+.btn:active{
+  transform:scale(.98);
+}
+
+.btn.alt{
+  background:#66736d;
+}
+
+.btn.danger{
+  background:var(--danger);
+}
+
+.btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.input{
+  display:block;
+  width:100%;
+  max-width:100%;
+  min-height:48px;
+  padding:13px;
+  border:1px solid #ccd8d2;
+  border-radius:9px;
+  font:inherit;
+  font-size:16px;
+  margin-top:8px;
+  background:white;
+  color:#102019;
+  outline:none;
+}
+
+.input:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px #087f3e18;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  font-weight:900;
+  margin-top:18px;
+}
+
+/* =========================
+   STEPS
+========================= */
+
+.steps{
+  margin-top:25px;
+}
+
+.step{
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  margin-top:12px;
+  background:#fff;
+}
+
+.step b{
+  color:var(--green);
+}
+
+/* =========================
+   ELECTION INFO
+========================= */
+
+.election-info{
+  background:#f7faf8;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:20px;
+  margin-top:20px;
+}
+
+/* =========================
+   POSITION
+========================= */
+
+.position{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:20px;
+  margin-top:18px;
+  background:white;
+  overflow:hidden;
+}
+
+.position h3{
+  margin-top:0;
+  color:var(--green);
+}
+
+/* =========================
+   CANDIDATE
+========================= */
+
+.candidate{
+  width:100%;
+  background:#f7faf8;
+  border:2px solid var(--line);
+  border-radius:12px;
+  padding:16px;
+  margin-top:12px;
+  cursor:pointer;
+  transition:.2s;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.candidate:hover{
+  border-color:var(--green);
+}
+
+.candidate.selected{
+  border-color:var(--green);
+  background:#eaf7ef;
+}
+
+.candidate:active{
+  transform:scale(.995);
+}
+
+.candidate img{
+  width:80px;
+  height:80px;
+  max-width:80px;
+  object-fit:cover;
+  border-radius:50%;
+  border:3px solid #e8f5ed;
+  display:block;
+  margin-bottom:10px;
+}
+
+.candidate-name{
+  font-weight:900;
+  font-size:17px;
+  line-height:1.35;
+  overflow-wrap:anywhere;
+}
+
+.manifesto{
+  color:var(--muted);
+  line-height:1.6;
+  margin-top:8px;
+  overflow-wrap:anywhere;
+}
+
+.radio{
+  margin-right:8px;
+  transform:scale(1.25);
+  accent-color:var(--green);
+}
+
+/* =========================
+   VERIFICATION
+========================= */
+
+.verify-box{
+  background:#f7faf8;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:20px;
+  margin-top:20px;
+}
+
+.password-note{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:7px;
+  line-height:1.5;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+  text-align:center;
+  padding:30px;
+  color:var(--muted);
+}
+
+/* =========================
+   ERROR / SUCCESS
+========================= */
+
+.error{
+  background:#fff0f0;
+  color:#8b2525;
+  border:1px solid #f0cccc;
+  padding:15px;
+  border-radius:10px;
+  margin-top:20px;
+  overflow-wrap:anywhere;
+}
+
+.success{
+  background:#eaf7ef;
+  color:#075c2d;
+  border:1px solid #bfe5ce;
+  padding:20px;
+  border-radius:12px;
+  margin-top:20px;
+  overflow-wrap:anywhere;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* =========================
+   REVIEW
+========================= */
+
+.review-item{
+  padding:15px;
+  border-bottom:1px solid var(--line);
+  overflow-wrap:anywhere;
+}
+
+.review-item:last-child{
+  border-bottom:0;
+}
+
+.review-position{
+  color:var(--green);
+  font-weight:900;
+}
+
+.review-candidate{
+  font-weight:800;
+  margin-top:5px;
+  overflow-wrap:anywhere;
+}
+
+/* =========================
+   TABLET / DESKTOP
+========================= */
+
+@media(min-width:700px){
+
+  .steps{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:699px){
+
+  .top{
+    padding:14px 16px;
+  }
+
+  .top strong{
+    font-size:15px;
+  }
+
+  .wrap{
+    margin:18px auto;
+    padding:0 12px;
+  }
+
+  .box{
+    padding:18px 15px;
+    border-radius:14px;
+  }
+
+  h1{
+    font-size:28px;
+    margin-bottom:16px;
+  }
+
+  h2{
+    font-size:22px;
+  }
+
+  h3{
+    font-size:18px;
+  }
+
+  .status{
+    font-size:13px;
+    padding:9px 12px;
+  }
+
+  .election-info{
+    padding:16px;
+  }
+
+  .verify-box{
+    padding:16px;
+  }
+
+  .position{
+    padding:15px;
+    border-radius:12px;
+  }
+
+  .candidate{
+    padding:15px;
+    min-height:100px;
+  }
+
+  .candidate img{
+    width:72px;
+    height:72px;
+  }
+
+  .candidate-name{
+    font-size:16px;
+  }
+
+  .manifesto{
+    font-size:14px;
+    line-height:1.55;
+  }
+
+  .intro{
+    font-size:14px;
+    line-height:1.55;
+  }
+
+  .step{
+    padding:15px;
+  }
+
+  /*
+    Make important buttons easier to tap
+    and prevent awkward wrapping.
+  */
+
+  .btn{
+    width:100%;
+    min-height:48px;
+    margin-top:12px;
+  }
+
+  /*
+    Keep the back-to-main button full width.
+  */
+
+  .box > .btn:last-child{
+    width:100%;
+  }
+
+  /*
+    Better spacing around review buttons.
+  */
+
+  #reviewBox .btn{
+    margin-top:10px;
+  }
+
+  /*
+    Give radio buttons a comfortable touch area.
+  */
+
+  .radio{
+    transform:scale(1.3);
+    margin-right:10px;
+  }
+
+}
+
+/* =========================
+   VERY SMALL PHONES
+========================= */
+
+@media(max-width:380px){
+
+  .wrap{
+    padding:0 8px;
+    margin:12px auto;
+  }
+
+  .box{
+    padding:15px 12px;
+  }
+
+  h1{
+    font-size:25px;
+  }
+
+  h2{
+    font-size:20px;
+  }
+
+  .top{
+    padding:13px 12px;
+  }
+
+  .position{
+    padding:12px;
+  }
+
+  .candidate{
+    padding:13px;
+  }
+
+  .candidate img{
+    width:65px;
+    height:65px;
+  }
+
+}
+
+/* =========================
+   REDUCE MOTION
+========================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    scroll-behavior:auto!important;
+    transition:none!important;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="top">
+  <strong>NANUS KWASU CHAPTER</strong>
+  — Election Portal
+  <br>
+  <span class="motto">EGWA FIN YA YEGBOROLO</span>
+</div>
+
+<div class="wrap">
+
+<div class="box">
+
+<h1>NANUS Election Portal</h1>
+
+<div id="status" class="status">
+  ● CHECKING ELECTION...
+</div>
+
+<div id="loading" class="loading">
+  Checking the current election...
+</div>
+
+
+<!-- NO ELECTION -->
+
+<div id="noElection" class="hidden">
+
+  <h2>Voting is not open</h2>
+
+  <p class="intro">
+    There is currently no open NANUS election.
+    The portal is ready for activation by the Electoral Committee.
+  </p>
+
+  <div class="steps">
+
+    <div class="step">
+      <b>01 — VERIFY</b>
+      <p>Voters will verify their matric number and election password.</p>
+    </div>
+
+    <div class="step">
+      <b>02 — CANDIDATES</b>
+      <p>Eligible candidates and positions will be displayed.</p>
+    </div>
+
+    <div class="step">
+      <b>03 — VOTE</b>
+      <p>Each verified voter will submit one ballot.</p>
+    </div>
+
+    <div class="step">
+      <b>04 — RESULTS</b>
+      <p>Results will be published after voting closes.</p>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ACTIVE ELECTION -->
+
+<div id="activeElection" class="hidden">
+
+  <div class="election-info">
+
+    <h2 id="electionTitle">
+      Election
+    </h2>
+
+    <p id="electionDescription" class="intro"></p>
+
+    <p id="electionDates" class="intro"></p>
+
+  </div>
+
+
+  <!-- VOTER VERIFICATION -->
+
+  <div id="verificationBox" class="verify-box">
+
+    <h2>Voter Verification</h2>
+
+    <p class="intro">
+      Enter your matric number and the election password provided by the Electoral Committee.
+    </p>
+
+    <label for="voterReference">
+      Matric Number
+    </label>
+
+    <input
+      id="voterReference"
+      class="input"
+      type="text"
+      placeholder="Enter your matric number"
+      autocomplete="off"
+      autocapitalize="characters"
+      spellcheck="false"
+    >
+
+    <label for="electionPassword">
+      Election Password
+    </label>
+
+    <input
+      id="electionPassword"
+      class="input"
+      type="password"
+      placeholder="Enter election password"
+      autocomplete="off"
+      spellcheck="false"
+    >
+
+    <div class="password-note">
+      The election password is shared by the Electoral Committee for this election.
+    </div>
+
+    <button
+      id="verifyBtn"
+      class="btn"
+      type="button"
+    >
+      Verify Voter
+    </button>
+
+    <div
+      id="verifyMessage"
+      class="intro"
+    ></div>
+
+  </div>
+
+
+  <!-- VOTING AREA -->
+
+  <div id="votingArea" class="hidden">
+
+    <div class="success">
+
+      <strong>✓ Voter verified</strong>
+
+      <p>
+        You are verified for this election.
+        Select one candidate for each position.
+      </p>
+
+    </div>
+
+    <h2>
+      Candidates & Positions
+    </h2>
+
+    <div id="positionsList"></div>
+
+    <button
+      id="reviewBtn"
+      class="btn"
+      type="button"
+    >
+      Review My Votes
+    </button>
+
+  </div>
+
+
+  <!-- REVIEW -->
+
+  <div id="reviewBox" class="hidden">
+
+    <h2>Review Your Votes</h2>
+
+    <p class="intro">
+      Please carefully check your selections before submitting.
+    </p>
+
+    <div id="reviewList"></div>
+
+    <button
+      id="backBtn"
+      class="btn alt"
+      type="button"
+    >
+      ← Back to Voting
+    </button>
+
+    <button
+      id="submitBtn"
+      class="btn"
+      type="button"
+    >
+      Submit My Votes
+    </button>
+
+  </div>
+
+
+  <!-- SUCCESS -->
+
+  <div id="voteSuccess" class="success hidden">
+
+    <h2>✓ Vote Submitted Successfully</h2>
+
+    <p>
+      Your vote has been recorded successfully.
+    </p>
+
+    <p>
+      Thank you for participating in the NANUS KWASU election.
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- ERROR -->
+
+<div id="errorBox" class="error hidden"></div>
+
+
+<a
+  class="btn"
+  href="index.html"
+>
+  ← Back to Main Website
+</a>
+
+</div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="config.js"></script>
+
+<script>
+
+let db = null;
+
+let currentElection = null;
+
+let currentVoter = null;
+
+let positions = [];
+
+let candidates = [];
+
+let selections = {};
+
+let currentDeviceId = null;
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function $(id){
+  return document.getElementById(id);
+}
+
+
+function esc(value){
+
+  return String(value ?? "")
+    .replace(/[&<>"']/g,function(m){
+
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[m];
+
+    });
+
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+function showError(message){
+
+  $("errorBox").textContent = message;
+
+  $("errorBox")
+    .classList
+    .remove("hidden");
+
+}
+
+
+function hideError(){
+
+  $("errorBox")
+    .classList
+    .add("hidden");
+
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+function formatDate(value){
+
+  if(!value) return "";
+
+  const date = new Date(value);
+
+  if(isNaN(date.getTime())) return value;
+
+  return date.toLocaleString(
+    "en-NG",
+    {
+      dateStyle:"medium",
+      timeStyle:"short"
+    }
+  );
+
+}
+
+
+/* =========================
+   DEVICE ID
+========================= */
+
+function getDeviceId(electionId){
+
+  const storageKey =
+    "nanus_election_device_" +
+    electionId;
+
+  let deviceId =
+    localStorage.getItem(storageKey);
+
+
+  if(!deviceId){
+
+    if(
+      window.crypto &&
+      crypto.randomUUID
+    ){
+
+      deviceId =
+        crypto.randomUUID();
+
+    }else{
+
+      deviceId =
+        "NANUS-" +
+        Date.now().toString(36) +
+        "-" +
+        Math.random()
+          .toString(36)
+          .substring(2,12);
+
+    }
+
+
+    localStorage.setItem(
+      storageKey,
+      deviceId
+    );
+
+  }
+
+
+  return deviceId;
+
+}
+
+
+/* =========================
+   LOAD ELECTION
+========================= */
+
+async function loadElection(){
+
+  try{
+
+    const {
+      data,
+      error
+    } = await db
+
+      .from("elections")
+
+      .select("*")
+
+      .eq("status","open")
+
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      )
+
+      .limit(1);
+
+
+    if(error){
+
+      showError(
+        "Unable to load election: " +
+        error.message
+      );
+
+      $("loading")
+        .classList
+        .add("hidden");
+
+      return;
+
+    }
+
+
+    $("loading")
+      .classList
+      .add("hidden");
+
+
+    if(!data || !data.length){
+
+      $("status").textContent =
+        "● NO ACTIVE ELECTION";
+
+      $("noElection")
+        .classList
+        .remove("hidden");
+
+      return;
+
+    }
+
+
+    currentElection = data[0];
+
+
+    currentDeviceId =
+      getDeviceId(
+        currentElection.id
+      );
+
+
+    $("status").className =
+      "status open";
+
+    $("status").textContent =
+      "● ELECTION OPEN";
+
+
+    $("activeElection")
+      .classList
+      .remove("hidden");
+
+
+    $("electionTitle").textContent =
+      currentElection.title ||
+      "NANUS Election";
+
+
+    $("electionDescription").textContent =
+      currentElection.description ||
+      "";
+
+
+    let dates = "";
+
+
+    if(currentElection.start_time){
+
+      dates +=
+        "Starts: " +
+        formatDate(
+          currentElection.start_time
+        );
+
+    }
+
+
+    if(currentElection.end_time){
+
+      dates +=
+        (dates ? " • " : "") +
+        "Ends: " +
+        formatDate(
+          currentElection.end_time
+        );
+
+    }
+
+
+    $("electionDates").textContent =
+      dates;
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showError(
+      "Something went wrong while loading the election."
+    );
+
+    $("loading")
+      .classList
+      .add("hidden");
+
+  }
+
+}
+
+
+/* =========================
+   VERIFY VOTER
+========================= */
+
+$("verifyBtn").onclick =
+  async function(){
+
+    const reference =
+      $("voterReference")
+        .value
+        .trim();
+
+
+    const password =
+      $("electionPassword")
+        .value
+        .trim();
+
+
+    $("verifyMessage").textContent =
+      "";
+
+    hideError();
+
+
+    if(!reference){
+
+      $("verifyMessage").textContent =
+        "Please enter your matric number.";
+
+      return;
+
+    }
+
+
+    if(!password){
+
+      $("verifyMessage").textContent =
+        "Please enter the election password.";
+
+      return;
+
+    }
+
+
+    if(!currentElection){
+
+      $("verifyMessage").textContent =
+        "No active election is available.";
+
+      return;
+
+    }
+
+
+    if(!currentDeviceId){
+
+      currentDeviceId =
+        getDeviceId(
+          currentElection.id
+        );
+
+    }
+
+
+    $("verifyBtn").disabled = true;
+
+    $("verifyBtn").textContent =
+      "Verifying...";
+
+
+    try{
+
+      const {
+        data,
+        error
+      } = await db.rpc(
+        "verify_nanus_voter",
+        {
+          p_election_id:
+            currentElection.id,
+
+          p_voter_reference:
+            reference,
+
+          p_password:
+            password,
+
+          p_device_id:
+            currentDeviceId
+        }
+      );
+
+
+      if(error){
+
+        console.error(
+          "Verification RPC error:",
+          error
+        );
+
+        $("verifyMessage").textContent =
+          error.message ||
+          "Voter verification failed.";
+
+        return;
+
+      }
+
+
+      if(!data){
+
+        $("verifyMessage").textContent =
+          "Voter verification failed.";
+
+        return;
+
+      }
+
+
+      if(!data.success){
+
+        $("verifyMessage").textContent =
+          data.message ||
+          "Voter verification failed.";
+
+        return;
+
+      }
+
+
+      currentVoter = {
+        id:data.voter_id
+      };
+
+
+      selections = {};
+
+
+      $("verificationBox")
+        .classList
+        .add("hidden");
+
+
+      await loadVotingData();
+
+
+      if(!positions.length){
+
+        $("verificationBox")
+          .classList
+          .remove("hidden");
+
+        currentVoter = null;
+
+        $("verifyMessage").textContent =
+          "No election positions are available.";
+
+        return;
+
+      }
+
+
+      $("votingArea")
+        .classList
+        .remove("hidden");
+
+
+      window.scrollTo({
+        top:0,
+        behavior:"smooth"
+      });
+
+
+    }catch(error){
+
+      console.error(
+        "Verification error:",
+        error
+      );
+
+      $("verifyMessage").textContent =
+        "Unable to verify voter: " +
+        (
+          error.message ||
+          "Unknown error."
+        );
+
+    }finally{
+
+      $("verifyBtn").disabled =
+        false;
+
+      $("verifyBtn").textContent =
+        "Verify Voter";
+
+    }
+
+  };
+
+
+/* =========================
+   LOAD VOTING DATA
+========================= */
+
+async function loadVotingData(){
+
+  const {
+    data:positionData,
+    error:positionError
+  } = await db
+
+    .from("election_positions")
+
+    .select("*")
+
+    .eq(
+      "election_id",
+      currentElection.id
+    )
+
+    .order(
+      "display_order",
+      {
+        ascending:true
+      }
+    );
+
+
+  if(positionError){
+
+    showError(
+      positionError.message
+    );
+
+    return;
+
+  }
+
+
+  positions =
+    positionData || [];
+
+
+  const {
+    data:candidateData,
+    error:candidateError
+  } = await db
+
+    .from("election_candidates")
+
+    .select("*")
+
+    .eq(
+      "election_id",
+      currentElection.id
+    )
+
+    .order(
+      "created_at",
+      {
+        ascending:true
+      }
+    );
+
+
+  if(candidateError){
+
+    showError(
+      candidateError.message
+    );
+
+    return;
+
+  }
+
+
+  candidates =
+    candidateData || [];
+
+
+  renderVoting();
+
+}
+
+
+/* =========================
+   RENDER VOTING
+========================= */
+
+function renderVoting(){
+
+  const box =
+    $("positionsList");
+
+
+  if(!positions.length){
+
+    box.innerHTML = `
+
+      <div class="step">
+
+        <b>NO POSITIONS</b>
+
+        <p>
+          No election positions have been added yet.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    positions.map(function(position){
+
+      const list =
+        candidates.filter(
+          c =>
+            c.position_id ===
+            position.id
+        );
+
+
+      return `
+
+        <div
+          class="position"
+          data-position="${esc(position.id)}"
+        >
+
+          <h3>
+            ${esc(position.name)}
+          </h3>
+
+          ${
+            position.description
+            ?
+            `<p class="intro">
+              ${esc(position.description)}
+            </p>`
+            :
+            ""
+          }
+
+
+          ${
+            list.length
+            ?
+
+            list.map(function(candidate){
+
+              return `
+
+                <div
+                  class="candidate"
+                  data-candidate="${esc(candidate.id)}"
+                  onclick="selectCandidate('${candidate.id}','${position.id}')"
+                >
+
+                  <input
+                    class="radio"
+                    type="radio"
+                    name="position-${esc(position.id)}"
+                    value="${esc(candidate.id)}"
+                    onclick="event.stopPropagation();selectCandidate('${candidate.id}','${position.id}')"
+                  >
+
+                  ${
+                    candidate.photo_url
+                    ?
+                    `<img
+                      src="${esc(candidate.photo_url)}"
+                      alt="${esc(candidate.name)}"
+                      onerror="this.style.display='none'"
+                    >`
+                    :
+                    ""
+                  }
+
+                  <div class="candidate-name">
+                    ${esc(candidate.name)}
+                  </div>
+
+
+                  ${
+                    candidate.manifesto
+                    ?
+                    `<div class="manifesto">
+
+                      <strong>Manifesto:</strong>
+
+                      <br>
+
+                      ${esc(candidate.manifesto)}
+
+                    </div>`
+                    :
+                    `<p class="intro">
+                      No manifesto provided.
+                    </p>`
+                  }
+
+                </div>
+
+              `;
+
+            }).join("")
+
+            :
+
+            `<p class="intro">
+              No candidates for this position.
+            </p>`
+
+          }
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================
+   SELECT CANDIDATE
+========================= */
+
+function selectCandidate(
+  candidateId,
+  positionId
+){
+
+  selections[positionId] =
+    candidateId;
+
+
+  const positionBox =
+    document.querySelector(
+      `[data-position="${positionId}"]`
+    );
+
+
+  if(!positionBox) return;
+
+
+  positionBox
+    .querySelectorAll(".candidate")
+    .forEach(function(card){
+
+      card.classList.remove(
+        "selected"
+      );
+
+    });
+
+
+  const selected =
+    positionBox.querySelector(
+      `[data-candidate="${candidateId}"]`
+    );
+
+
+  if(selected){
+
+    selected.classList.add(
+      "selected"
+    );
+
+  }
+
+
+  positionBox
+    .querySelectorAll(
+      'input[type="radio"]'
+    )
+    .forEach(function(radio){
+
+      radio.checked =
+        radio.value ===
+        candidateId;
+
+    });
+
+}
+
+
+/* =========================
+   REVIEW
+========================= */
+
+$("reviewBtn").onclick =
+  function(){
+
+    const missing =
+      positions.filter(
+        p =>
+          !selections[p.id]
+      );
+
+
+    if(missing.length){
+
+      alert(
+        "Please select a candidate for: " +
+        missing
+          .map(p => p.name)
+          .join(", ")
+      );
+
+      return;
+
+    }
+
+
+    $("reviewList").innerHTML =
+      positions.map(function(position){
+
+        const candidate =
+          candidates.find(
+            c =>
+              c.id ===
+              selections[position.id]
+          );
+
+
+        return `
+
+          <div class="review-item">
+
+            <div class="review-position">
+              ${esc(position.name)}
+            </div>
+
+            <div class="review-candidate">
+              ${esc(candidate?.name || "Not selected")}
+            </div>
+
+          </div>
+
+        `;
+
+      }).join("");
+
+
+    $("votingArea")
+      .classList
+      .add("hidden");
+
+
+    $("reviewBox")
+      .classList
+      .remove("hidden");
+
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  };
+
+
+/* =========================
+   BACK
+========================= */
+
+$("backBtn").onclick =
+  function(){
+
+    $("reviewBox")
+      .classList
+      .add("hidden");
+
+    $("votingArea")
+      .classList
+      .remove("hidden");
+
+  };
+
+
+/* =========================
+   SECURE SUBMIT VOTES
+========================= */
+
+$("submitBtn").onclick =
+  async function(){
+
+    if(!currentVoter){
+
+      alert(
+        "Voter verification is required."
+      );
+
+      return;
+
+    }
+
+
+    if(!currentElection){
+
+      alert(
+        "No active election found."
+      );
+
+      return;
+
+    }
+
+
+    const missing =
+      positions.filter(
+        p =>
+          !selections[p.id]
+      );
+
+
+    if(missing.length){
+
+      alert(
+        "Please select a candidate for: " +
+        missing
+          .map(p => p.name)
+          .join(", ")
+      );
+
+      return;
+
+    }
+
+
+    const confirmed =
+      confirm(
+        "Are you sure you want to submit your votes? You will not be able to vote again."
+      );
+
+
+    if(!confirmed) return;
+
+
+    $("submitBtn").disabled =
+      true;
+
+    $("submitBtn").textContent =
+      "Submitting...";
+
+
+    hideError();
+
+
+    try{
+
+      const votes =
+        positions.map(function(position){
+
+          return {
+
+            position_id:
+              position.id,
+
+            candidate_id:
+              selections[position.id]
+
+          };
+
+        });
+
+
+      const {
+        data,
+        error
+      } = await db.rpc(
+        "cast_nanus_vote",
+        {
+          p_election_id:
+            currentElection.id,
+
+          p_voter_id:
+            currentVoter.id,
+
+          p_votes:
+            votes
+
+        }
+      );
+
+
+      if(error){
+
+        throw error;
+
+      }
+
+
+      $("reviewBox")
+        .classList
+        .add("hidden");
+
+
+      $("voteSuccess")
+        .classList
+        .remove("hidden");
+
+
+      window.scrollTo({
+        top:0,
+        behavior:"smooth"
+      });
+
+
+    }catch(error){
+
+      console.error(
+        "Vote submission error:",
+        error
+      );
+
+
+      showError(
+        "Vote submission failed: " +
+        (
+          error.message ||
+          "Please try again."
+        )
+      );
+
+
+    }finally{
+
+      $("submitBtn").disabled =
+        false;
+
+      $("submitBtn").textContent =
+        "Submit My Votes";
+
+    }
+
+  };
+
+
+/* =========================
+   INITIALIZE
+========================= */
+
+async function init(){
+
+  const cfg =
+    window.NANUS_CONFIG || {};
+
+
+  if(
+    !cfg.url ||
+    !cfg.anonKey
+  ){
+
+    showError(
+      "Supabase configuration is missing. Please check config.js."
+    );
+
+    $("loading")
+      .classList
+      .add("hidden");
+
+    return;
+
+  }
+
+
+  if(
+    !window.supabase ||
+    !window.supabase.createClient
+  ){
+
+    showError(
+      "Supabase library could not be loaded."
+    );
+
+    $("loading")
+      .classList
+      .add("hidden");
+
+    return;
+
+  }
+
+
+  db =
+    window.supabase.createClient(
+      cfg.url,
+      cfg.anonKey
+    );
+
+
+  await loadElection();
+
+}
+
+
+init();
+
+</script>
+
+</body>
+</html>

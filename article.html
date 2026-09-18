@@ -1,0 +1,701 @@
+<!doctype html>
+
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>News | NANUS KWASU Chapter</title><style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f5f7f5;
+  color:#15251b;
+}
+
+header{
+  background:#06351e;
+  color:white;
+  padding:18px 5%;
+  position:sticky;
+  top:0;
+  z-index:10;
+  box-shadow:0 3px 12px rgba(0,0,0,.15);
+}
+
+.header-inner{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:white;
+  font-weight:900;
+}
+
+.brand img{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.back{
+  color:#f4c542;
+  text-decoration:none;
+  font-weight:800;
+}
+
+main{
+  max-width:900px;
+  margin:40px auto;
+  padding:0 18px;
+}
+
+.article-card{
+  background:white;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 5px 25px rgba(0,0,0,.08);
+}
+
+.article-image{
+  width:100%;
+  max-height:450px;
+  object-fit:cover;
+  display:block;
+}
+
+.article-content{
+  padding:30px;
+}
+
+.category{
+  display:inline-block;
+  background:#06351e;
+  color:#f4c542;
+  padding:7px 12px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:900;
+  text-transform:uppercase;
+}
+
+h1{
+  font-size:38px;
+  line-height:1.15;
+  margin:18px 0 12px;
+}
+
+.meta{
+  color:#68756d;
+  font-size:14px;
+  margin-bottom:25px;
+}
+
+.excerpt{
+  font-size:18px;
+  line-height:1.6;
+  font-weight:600;
+  color:#405047;
+  border-left:4px solid #f4c542;
+  padding-left:15px;
+  margin-bottom:25px;
+}
+
+.body{
+  font-size:17px;
+  line-height:1.85;
+  white-space:pre-wrap;
+  word-wrap:break-word;
+}
+
+.loading,
+.error{
+  text-align:center;
+  background:white;
+  padding:50px 25px;
+  border-radius:18px;
+}
+
+.error h2{
+  margin-top:0;
+}
+
+.error a{
+  display:inline-block;
+  margin-top:15px;
+  background:#087f3e;
+  color:white;
+  padding:11px 16px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:800;
+}
+
+footer{
+  background:#06351e;
+  color:white;
+  text-align:center;
+  padding:25px 15px;
+  margin-top:50px;
+}
+
+.muted{
+  color:#758078;
+}
+
+@media(max-width:600px){
+
+  h1{
+    font-size:28px;
+  }
+
+  .article-content{
+    padding:22px;
+  }
+
+  .article-image{
+    max-height:300px;
+  }
+
+  .header-inner{
+    flex-wrap:wrap;
+  }
+
+  .back{
+    font-size:13px;
+  }
+
+}
+
+</style></head><body><header>  <div class="header-inner"><a
+  href="index.html"
+  class="brand"
+>
+
+  <img
+    src="nanus-logo.jpg"
+    alt="NANUS Logo"
+  >
+
+  <span>
+    NANUS KWASU Chapter
+  </span>
+
+</a>
+
+<a
+  href="index.html#news"
+  class="back"
+>
+  ← Back to News
+</a>
+
+  </div></header><main>  <div
+    id="article"
+    class="loading"
+  ><h2>
+  Loading article…
+</h2>
+
+<p class="muted">
+  Please wait while the news article loads.
+</p>
+
+  </div></main><footer>  <strong>
+    NANUS KWASU Chapter
+  </strong>  <p>
+    EGWA FIN YA YEGBOROLO.
+  </p>  <small>
+    © 2026 NANUS KWASU Chapter. All rights reserved.
+  </small></footer><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+
+const SUPABASE_URL =
+  "https://risxjzdxrtzhlkwxhhzm.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_x9ZKrx8ilp1_Nj4F8U_i5A__eTKwWFx";
+
+
+let db = null;
+
+
+/* =========================
+   START SUPABASE
+========================= */
+
+function startSupabase(){
+
+  if(
+    !window.supabase ||
+    !window.supabase.createClient
+  ){
+
+    showError(
+      "Supabase library could not load."
+    );
+
+    return false;
+
+  }
+
+  try{
+
+    db =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "SUPABASE START ERROR:",
+      error
+    );
+
+    showError(
+      "Unable to connect to the NANUS news system."
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function esc(value){
+
+  return String(
+    value ?? ""
+  ).replace(
+    /[&<>"']/g,
+    function(char){
+
+      return {
+
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+
+      }[char];
+
+    }
+  );
+
+}
+
+
+/* =========================
+   GET ARTICLE ID
+========================= */
+
+function getArticleId(){
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const id =
+    params.get("id");
+
+  if(!id){
+    return null;
+  }
+
+  return id.trim();
+
+}
+
+
+/* =========================
+   SHOW ERROR
+========================= */
+
+function showError(message){
+
+  const box =
+    document.getElementById(
+      "article"
+    );
+
+  box.className =
+    "error";
+
+  box.innerHTML = `
+
+    <h2>
+      Article unavailable
+    </h2>
+
+    <p class="muted">
+      ${esc(message)}
+    </p>
+
+    <a href="index.html#news">
+      ← Return to News
+    </a>
+
+  `;
+
+}
+
+
+/* =========================
+   LOAD ARTICLE
+========================= */
+
+async function loadArticle(){
+
+  const box =
+    document.getElementById(
+      "article"
+    );
+
+
+  const id =
+    getArticleId();
+
+
+  /* CHECK ID */
+
+  if(!id){
+
+    showError(
+      "No news article was selected."
+    );
+
+    return;
+
+  }
+
+
+  /* CHECK DATABASE */
+
+  if(!db){
+
+    showError(
+      "The news system is not connected."
+    );
+
+    return;
+
+  }
+
+
+  console.log(
+    "Loading article ID:",
+    id
+  );
+
+
+  try{
+
+    /*
+      IMPORTANT:
+      Only request columns that are
+      actually used by the current
+      NANUS admin system.
+
+      We intentionally DO NOT request
+      the "author" column because the
+      admin system stores "author_id".
+    */
+
+    const {
+      data,
+      error
+    } =
+      await db
+        .from("posts")
+        .select(
+          "id,title,category,excerpt,body,image_url,created_at,published,author_id"
+        )
+        .eq(
+          "id",
+          id
+        )
+        .eq(
+          "published",
+          true
+        )
+        .maybeSingle();
+
+
+    console.log(
+      "ARTICLE DATA:",
+      data
+    );
+
+    console.log(
+      "ARTICLE ERROR:",
+      error
+    );
+
+
+    /* DATABASE ERROR */
+
+    if(error){
+
+      console.error(
+        "ARTICLE DATABASE ERROR:",
+        error
+      );
+
+      showError(
+        "There was a problem loading this article from the database."
+      );
+
+      return;
+
+    }
+
+
+    /* ARTICLE NOT FOUND */
+
+    if(!data){
+
+      showError(
+        "This article could not be found or is not currently published."
+      );
+
+      return;
+
+    }
+
+
+    /* =========================
+       ARTICLE INFORMATION
+    ========================= */
+
+    const title =
+      data.title ||
+      "NANUS KWASU Chapter News";
+
+
+    const category =
+      data.category ||
+      "News";
+
+
+    const excerpt =
+      data.excerpt ||
+      "";
+
+
+    const body =
+      data.body ||
+      "";
+
+
+    /*
+      The current posts table uses
+      author_id, so display a general
+      NANUS author name.
+    */
+
+    const author =
+      "NANUS KWASU Chapter";
+
+
+    /* FORMAT DATE */
+
+    let date = "";
+
+
+    if(data.created_at){
+
+      const d =
+        new Date(
+          data.created_at
+        );
+
+
+      if(
+        !isNaN(
+          d.getTime()
+        )
+      ){
+
+        date =
+          d.toLocaleDateString(
+            "en-NG",
+            {
+              year:"numeric",
+              month:"long",
+              day:"numeric"
+            }
+          );
+
+      }
+
+    }
+
+
+    /* IMAGE */
+
+    const image =
+      data.image_url ||
+      "";
+
+
+    /* =========================
+       DISPLAY ARTICLE
+    ========================= */
+
+    box.className =
+      "article-card";
+
+
+    box.innerHTML = `
+
+      ${
+        image
+        ?
+        `
+        <img
+          class="article-image"
+          src="${esc(image)}"
+          alt="${esc(title)}"
+          onerror="this.style.display='none'"
+        >
+        `
+        :
+        ""
+      }
+
+
+      <article
+        class="article-content"
+      >
+
+
+        <span class="category">
+
+          ${esc(category)}
+
+        </span>
+
+
+        <h1>
+
+          ${esc(title)}
+
+        </h1>
+
+
+        <div class="meta">
+
+          By
+
+          <strong>
+            ${esc(author)}
+          </strong>
+
+          ${
+            date
+            ?
+            ` • ${esc(date)}`
+            :
+            ""
+          }
+
+        </div>
+
+
+        ${
+          excerpt
+          ?
+          `
+          <div class="excerpt">
+
+            ${esc(excerpt)}
+
+          </div>
+          `
+          :
+          ""
+        }
+
+
+        ${
+          body
+          ?
+          `
+          <div class="body">
+
+            ${esc(body)}
+
+          </div>
+          `
+          :
+          `
+          <div class="body">
+
+            No article content available.
+
+          </div>
+          `
+        }
+
+
+      </article>
+
+    `;
+
+
+    document.title =
+      title +
+      " | NANUS KWASU Chapter";
+
+
+  }catch(error){
+
+    console.error(
+      "ARTICLE UNEXPECTED ERROR:",
+      error
+    );
+
+    showError(
+      "Something went wrong while loading the article."
+    );
+
+  }
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+if(
+  startSupabase()
+){
+
+  loadArticle();
+
+}
+
+</script></body>
+</html>

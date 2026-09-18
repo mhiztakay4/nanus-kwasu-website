@@ -1,0 +1,3354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>NANUS Election Admin</title>
+
+<style>
+:root{
+  --green:#087f3e;
+  --deep:#06351e;
+  --gold:#e0b52f;
+  --bg:#f4f7f5;
+  --line:#dfe8e2;
+  --muted:#68746e;
+  --danger:#a52b2b;
+  --blue:#2457a6;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:#102019;
+}
+
+.top{
+  background:var(--deep);
+  color:white;
+  padding:15px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.top a{
+  color:white;
+  text-decoration:none;
+}
+
+.wrap{
+  width:min(1100px,92%);
+  margin:28px auto;
+}
+
+.panel{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:24px;
+  margin-bottom:18px;
+}
+
+h1,h2,h3{
+  margin-top:0;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  font-weight:800;
+  margin:13px 0 6px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  padding:11px;
+  border:1px solid #ccd8d2;
+  border-radius:8px;
+  font:inherit;
+}
+
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+.btn{
+  border:0;
+  background:var(--green);
+  color:white;
+  padding:11px 16px;
+  border-radius:8px;
+  font-weight:800;
+  cursor:pointer;
+  margin-top:12px;
+}
+
+.btn:hover{
+  opacity:.9;
+}
+
+.btn.alt{
+  background:#66736d;
+}
+
+.btn.gold{
+  background:#b58a00;
+}
+
+.btn.danger{
+  background:var(--danger);
+}
+
+.btn.blue{
+  background:var(--blue);
+}
+
+.btn:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.muted{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.notice{
+  padding:13px;
+  border-radius:9px;
+  background:#eef6f1;
+  margin:10px 0;
+}
+
+.error{
+  background:#fff0f0;
+  color:#8b2525;
+}
+
+.success{
+  background:#eaf7ef;
+  color:#075c2d;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.item{
+  border-top:1px solid var(--line);
+  padding:16px 0;
+}
+
+.item:first-child{
+  border-top:0;
+}
+
+.item-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:flex-start;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#e8f5ed;
+  color:var(--green);
+  font-size:11px;
+  font-weight:900;
+}
+
+.badge.open{
+  background:#e8f5ed;
+  color:var(--green);
+}
+
+.badge.closed{
+  background:#eee;
+  color:#555;
+}
+
+.badge.draft{
+  background:#fff6d8;
+  color:#806600;
+}
+
+.password-box{
+  margin-top:14px;
+  padding:15px;
+  border:1px solid #e5d49a;
+  background:#fffaf0;
+  border-radius:10px;
+}
+
+.password-label{
+  font-size:12px;
+  font-weight:800;
+  color:#806600;
+  margin-bottom:6px;
+}
+
+.password-value{
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:2px;
+  word-break:break-all;
+}
+
+.password-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.password-actions .btn{
+  margin-top:10px;
+}
+
+.candidate{
+  background:#f7faf8;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:13px;
+  margin-top:10px;
+}
+
+.row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.small{
+  font-size:12px;
+}
+
+
+/* =========================
+   RESULTS
+========================= */
+
+.results-toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-top:12px;
+}
+
+.results-summary{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:18px;
+}
+
+.summary-card{
+  background:#f7faf8;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:18px;
+}
+
+.summary-number{
+  font-size:28px;
+  font-weight:900;
+  color:var(--green);
+}
+
+.summary-label{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:4px;
+}
+
+.turnout-bar{
+  height:12px;
+  background:#e7eeea;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:12px;
+}
+
+.turnout-fill{
+  height:100%;
+  background:var(--green);
+  width:0%;
+}
+
+.turnout-text{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:7px;
+}
+
+.result-position{
+  margin-top:22px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+}
+
+.result-position-title{
+  background:var(--deep);
+  color:white;
+  padding:16px;
+  font-size:18px;
+  font-weight:900;
+}
+
+.result-candidate{
+  padding:16px;
+  border-top:1px solid var(--line);
+}
+
+.result-candidate:first-child{
+  border-top:0;
+}
+
+.result-head{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  align-items:center;
+}
+
+.result-name{
+  font-weight:900;
+  font-size:16px;
+}
+
+.result-votes{
+  font-weight:900;
+  color:var(--green);
+  white-space:nowrap;
+}
+
+.result-bar{
+  height:10px;
+  background:#e7eeea;
+  border-radius:20px;
+  margin-top:10px;
+  overflow:hidden;
+}
+
+.result-fill{
+  height:100%;
+  background:var(--green);
+  border-radius:20px;
+}
+
+.result-percent{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:6px;
+}
+
+.leading{
+  display:inline-block;
+  margin-left:8px;
+  padding:4px 7px;
+  border-radius:12px;
+  background:#fff6d8;
+  color:#806600;
+  font-size:10px;
+  font-weight:900;
+}
+
+.no-results{
+  padding:20px;
+  background:#f7faf8;
+  border-radius:10px;
+  color:var(--muted);
+  margin-top:15px;
+}
+
+.loading-results{
+  text-align:center;
+  padding:25px;
+  color:var(--muted);
+}
+
+
+/* =========================
+   VOTER STATISTICS
+========================= */
+
+.voter-status-box{
+  margin-top:25px;
+  border-top:1px solid var(--line);
+  padding-top:20px;
+}
+
+.status-table-wrap{
+  overflow-x:auto;
+  margin-top:12px;
+}
+
+.status-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:500px;
+}
+
+.status-table th,
+.status-table td{
+  padding:11px;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+  font-size:13px;
+}
+
+.status-table th{
+  background:#f7faf8;
+  font-weight:900;
+}
+
+.voted{
+  color:var(--green);
+  font-weight:900;
+}
+
+.not-voted{
+  color:#8b6b00;
+  font-weight:900;
+}
+
+.export-note{
+  margin-top:10px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+
+/* =========================
+   STRUCTURE
+========================= */
+
+.structure-position{
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:16px;
+  margin-top:14px;
+}
+
+.structure-position h3{
+  color:var(--green);
+}
+
+@media(max-width:850px){
+
+  .results-summary{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+@media(max-width:700px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .results-summary{
+    grid-template-columns:1fr;
+  }
+
+  .top{
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .item-head{
+    display:block;
+  }
+
+  .result-head{
+    align-items:flex-start;
+  }
+
+  .wrap{
+    width:94%;
+  }
+
+  .panel{
+    padding:20px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="top">
+
+  <strong>
+    NANUS KWASU • ELECTION ADMIN
+  </strong>
+
+  <div class="row">
+
+    <a href="election.html">
+      Election Portal
+    </a>
+
+    <button
+      class="btn alt"
+      id="logoutBtn"
+      type="button"
+    >
+      Sign Out
+    </button>
+
+  </div>
+
+</div>
+
+
+<div class="wrap">
+
+
+<!-- =========================
+     LOGIN
+========================= -->
+
+<div
+  id="loginPanel"
+  class="panel"
+>
+
+  <h1>
+    Election Admin Login
+  </h1>
+
+  <p class="muted">
+    Authorized NANUS administrators only.
+  </p>
+
+  <label>
+    Email
+  </label>
+
+  <input
+    id="email"
+    type="email"
+    autocomplete="email"
+  >
+
+  <label>
+    Password
+  </label>
+
+  <input
+    id="password"
+    type="password"
+    autocomplete="current-password"
+  >
+
+  <button
+    class="btn"
+    id="loginBtn"
+    type="button"
+  >
+    Sign In
+  </button>
+
+  <div
+    id="loginMsg"
+    class="muted"
+  ></div>
+
+</div>
+
+
+<!-- =========================
+     DASHBOARD
+========================= -->
+
+<div
+  id="dashboard"
+  class="hidden"
+>
+
+
+<!-- ADMIN HEADER -->
+
+<div class="panel">
+
+  <div class="item-head">
+
+    <div>
+
+      <h1>
+        Election Management
+      </h1>
+
+      <p class="muted">
+        Manage NANUS elections, positions, candidates and results.
+      </p>
+
+    </div>
+
+    <div
+      id="adminStatus"
+      class="badge"
+    >
+      ADMIN ACTIVE
+    </div>
+
+  </div>
+
+  <div
+    id="msg"
+    class="notice hidden"
+  ></div>
+
+</div>
+
+
+<!-- =========================
+     CREATE ELECTION
+========================= -->
+
+<div class="panel">
+
+  <h2>
+    Create Election
+  </h2>
+
+  <label>
+    Election Title
+  </label>
+
+  <input
+    id="electionTitle"
+    placeholder="NANUS KWASU Election 2026"
+  >
+
+  <label>
+    Description
+  </label>
+
+  <textarea
+    id="electionDescription"
+    placeholder="Official NANUS KWASU Chapter election..."
+  ></textarea>
+
+  <div class="grid">
+
+    <div>
+
+      <label>
+        Start Date & Time
+      </label>
+
+      <input
+        id="startTime"
+        type="datetime-local"
+      >
+
+    </div>
+
+    <div>
+
+      <label>
+        End Date & Time
+      </label>
+
+      <input
+        id="endTime"
+        type="datetime-local"
+      >
+
+    </div>
+
+  </div>
+
+  <label>
+    Status
+  </label>
+
+  <select id="electionStatus">
+
+    <option value="draft">
+      Draft
+    </option>
+
+    <option value="open">
+      Open
+    </option>
+
+    <option value="closed">
+      Closed
+    </option>
+
+  </select>
+
+  <button
+    class="btn"
+    id="createElectionBtn"
+    type="button"
+  >
+    Create Election & Generate Password
+  </button>
+
+  <p class="muted">
+    A unique election password will be generated automatically.
+  </p>
+
+</div>
+
+
+<!-- =========================
+     CURRENT ELECTIONS
+========================= -->
+
+<div class="panel">
+
+  <h2>
+    Current Elections
+  </h2>
+
+  <div id="electionsList">
+
+    <p class="muted">
+      Loading elections...
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     RESULTS DASHBOARD
+========================= -->
+
+<div class="panel">
+
+  <div class="item-head">
+
+    <div>
+
+      <h2>
+        Election Results
+      </h2>
+
+      <p class="muted">
+        View recorded votes, turnout and candidate totals.
+      </p>
+
+    </div>
+
+    <div class="results-toolbar">
+
+      <button
+        class="btn"
+        id="refreshResultsBtn"
+        type="button"
+      >
+        ↻ Refresh
+      </button>
+
+      <button
+        class="btn blue"
+        id="exportResultsBtn"
+        type="button"
+      >
+        ↓ Export CSV
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <label>
+    Select Election
+  </label>
+
+  <select id="resultsElection">
+
+    <option value="">
+      Select election
+    </option>
+
+  </select>
+
+
+  <div
+    id="resultsLoading"
+    class="loading-results hidden"
+  >
+    Loading election results...
+  </div>
+
+
+  <div
+    id="resultsContent"
+    class="hidden"
+  >
+
+    <!-- SUMMARY -->
+
+    <div class="results-summary">
+
+      <div class="summary-card">
+
+        <div
+          id="totalVotes"
+          class="summary-number"
+        >
+          0
+        </div>
+
+        <div class="summary-label">
+          Total Votes Cast
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div
+          id="registeredVoters"
+          class="summary-number"
+        >
+          0
+        </div>
+
+        <div class="summary-label">
+          Registered Voters
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div
+          id="votersWhoVoted"
+          class="summary-number"
+        >
+          0
+        </div>
+
+        <div class="summary-label">
+          Voters Who Voted
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div
+          id="positionsCount"
+          class="summary-number"
+        >
+          0
+        </div>
+
+        <div class="summary-label">
+          Positions
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- TURNOUT -->
+
+    <div class="voter-status-box">
+
+      <h3>
+        Voter Turnout
+      </h3>
+
+      <div
+        id="turnoutText"
+        class="turnout-text"
+      >
+        0% turnout
+      </div>
+
+      <div class="turnout-bar">
+
+        <div
+          id="turnoutFill"
+          class="turnout-fill"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- RESULTS -->
+
+    <div id="resultsList"></div>
+
+
+    <!-- VOTER STATUS -->
+
+    <div class="voter-status-box">
+
+      <h3>
+        Voter Status
+      </h3>
+
+      <p class="muted">
+        Summary of registered voters and whether they have submitted a ballot.
+      </p>
+
+      <div
+        id="voterStatusSummary"
+        class="notice"
+      ></div>
+
+      <div class="status-table-wrap">
+
+        <table class="status-table">
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Voter Reference
+              </th>
+
+              <th>
+                Status
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody
+            id="voterStatusTable"
+          ></tbody>
+
+        </table>
+
+      </div>
+
+      <p class="export-note">
+        CSV export contains the election results and voter-status summary.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div
+    id="noResults"
+    class="no-results"
+  >
+    Select an election to view results.
+  </div>
+
+</div>
+
+
+<!-- =========================
+     ADD POSITION
+========================= -->
+
+<div class="panel">
+
+  <h2>
+    Add Election Position
+  </h2>
+
+  <label>
+    Select Election
+  </label>
+
+  <select id="positionElection">
+
+    <option value="">
+      Select election
+    </option>
+
+  </select>
+
+  <label>
+    Position Name
+  </label>
+
+  <input
+    id="positionName"
+    placeholder="President"
+  >
+
+  <label>
+    Description
+  </label>
+
+  <textarea
+    id="positionDescription"
+    placeholder="President of NANUS KWASU Chapter..."
+  ></textarea>
+
+  <label>
+    Display Order
+  </label>
+
+  <input
+    id="positionOrder"
+    type="number"
+    value="0"
+  >
+
+  <button
+    class="btn"
+    id="addPositionBtn"
+    type="button"
+  >
+    Add Position
+  </button>
+
+</div>
+
+
+<!-- =========================
+     ADD CANDIDATE
+========================= -->
+
+<div class="panel">
+
+  <h2>
+    Add Candidate
+  </h2>
+
+  <label>
+    Select Election
+  </label>
+
+  <select id="candidateElection">
+
+    <option value="">
+      Select election
+    </option>
+
+  </select>
+
+  <label>
+    Select Position
+  </label>
+
+  <select id="candidatePosition">
+
+    <option value="">
+      Select position
+    </option>
+
+  </select>
+
+  <label>
+    Candidate Name
+  </label>
+
+  <input
+    id="candidateName"
+    placeholder="Full candidate name"
+  >
+
+  <label>
+    Manifesto
+  </label>
+
+  <textarea
+    id="candidateManifesto"
+    placeholder="Candidate manifesto..."
+  ></textarea>
+
+  <label>
+    Candidate Photo URL
+  </label>
+
+  <input
+    id="candidatePhoto"
+    placeholder="https://..."
+  >
+
+  <button
+    class="btn"
+    id="addCandidateBtn"
+    type="button"
+  >
+    Add Candidate
+  </button>
+
+</div>
+
+
+<!-- =========================
+     ELECTION STRUCTURE
+========================= -->
+
+<div class="panel">
+
+  <h2>
+    Election Structure
+  </h2>
+
+  <div id="structure">
+
+    <p class="muted">
+      Select an election above to view positions and candidates.
+    </p>
+
+  </div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="config.js"></script>
+
+<script>
+
+let db;
+
+let elections = [];
+
+let positions = [];
+
+let candidates = [];
+
+let currentResults = null;
+
+
+const $ = id =>
+  document.getElementById(id);
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+function showMessage(text,error=false){
+
+  const box = $("msg");
+
+  box.textContent = text;
+
+  box.className =
+    "notice" +
+    (error ? " error" : "");
+
+  box.classList.remove("hidden");
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function esc(value){
+
+  return String(value ?? "")
+    .replace(/[&<>"']/g,function(m){
+
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[m];
+
+    });
+
+}
+
+
+/* =========================
+   CSV ESCAPE
+========================= */
+
+function csvEscape(value){
+
+  const text =
+    String(value ?? "");
+
+  return '"' +
+    text.replace(/"/g,'""') +
+    '"';
+
+}
+
+
+/* =========================
+   DOWNLOAD FILE
+========================= */
+
+function downloadFile(
+  filename,
+  content
+){
+
+  const blob =
+    new Blob(
+      [content],
+      {
+        type:"text/csv;charset=utf-8;"
+      }
+    );
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const link =
+    document.createElement("a");
+
+  link.href = url;
+
+  link.download = filename;
+
+  document.body.appendChild(link);
+
+  link.click();
+
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================
+   GENERATE PASSWORD
+========================= */
+
+function generateElectionPassword(){
+
+  const chars =
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+  let result = "";
+
+  for(let i=0;i<6;i++){
+
+    result +=
+      chars.charAt(
+        Math.floor(
+          Math.random() * chars.length
+        )
+      );
+
+  }
+
+  return "NANUS-" + result;
+
+}
+
+
+/* =========================
+   COPY PASSWORD
+========================= */
+
+async function copyPassword(password){
+
+  try{
+
+    await navigator.clipboard.writeText(password);
+
+    showMessage(
+      "Election password copied successfully."
+    );
+
+  }catch(error){
+
+    showMessage(
+      "Could not copy automatically. Please copy the password manually.",
+      true
+    );
+
+  }
+
+}
+
+
+/* =========================
+   REGENERATE PASSWORD
+========================= */
+
+async function regeneratePassword(id){
+
+  const newPassword =
+    generateElectionPassword();
+
+  const {
+    error
+  } =
+    await db
+      .from("elections")
+      .update({
+        election_password:newPassword
+      })
+      .eq("id",id);
+
+  if(error){
+
+    showMessage(
+      error.message,
+      true
+    );
+
+    return;
+
+  }
+
+  showMessage(
+    "New election password generated successfully."
+  );
+
+  await loadElections();
+
+}
+
+
+/* =========================
+   INIT
+========================= */
+
+async function init(){
+
+  const cfg =
+    window.NANUS_CONFIG || {};
+
+  if(!cfg.url || !cfg.anonKey){
+
+    $("loginMsg").textContent =
+      "Supabase configuration is missing. Check config.js.";
+
+    return;
+
+  }
+
+  if(
+    !window.supabase ||
+    !window.supabase.createClient
+  ){
+
+    $("loginMsg").textContent =
+      "Supabase library could not be loaded.";
+
+    return;
+
+  }
+
+  db =
+    window.supabase.createClient(
+      cfg.url,
+      cfg.anonKey
+    );
+
+
+  const {
+    data:{
+      session
+    }
+  } =
+    await db.auth.getSession();
+
+
+  if(session){
+
+    await openDashboard();
+
+  }
+
+
+  db.auth.onAuthStateChange(
+    async function(event,session){
+
+      if(session){
+
+        await openDashboard();
+
+      }else{
+
+        closeDashboard();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+$("loginBtn").onclick =
+  async function(){
+
+    $("loginMsg").textContent =
+      "Signing in...";
+
+
+    const {
+      error
+    } =
+    await db.auth.signInWithPassword({
+
+      email:
+        $("email").value.trim(),
+
+      password:
+        $("password").value
+
+    });
+
+
+    if(error){
+
+      $("loginMsg").textContent =
+        error.message;
+
+      return;
+
+    }
+
+
+    $("loginMsg").textContent =
+      "";
+
+  };
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+async function openDashboard(){
+
+  $("loginPanel")
+    .classList.add("hidden");
+
+  $("dashboard")
+    .classList.remove("hidden");
+
+  await loadAll();
+
+}
+
+
+function closeDashboard(){
+
+  $("loginPanel")
+    .classList.remove("hidden");
+
+  $("dashboard")
+    .classList.add("hidden");
+
+}
+
+
+$("logoutBtn").onclick =
+  async function(){
+
+    await db.auth.signOut();
+
+  };
+
+
+/* =========================
+   CREATE ELECTION
+========================= */
+
+$("createElectionBtn").onclick =
+  async function(){
+
+    const title =
+      $("electionTitle")
+        .value
+        .trim();
+
+    if(!title){
+
+      showMessage(
+        "Please enter an election title.",
+        true
+      );
+
+      return;
+
+    }
+
+
+    const electionPassword =
+      generateElectionPassword();
+
+
+    const {
+      data,
+      error
+    } =
+      await db
+        .from("elections")
+        .insert({
+
+          title:title,
+
+          description:
+            $("electionDescription")
+              .value
+              .trim(),
+
+          status:
+            $("electionStatus")
+              .value,
+
+          start_time:
+            $("startTime").value
+              ? new Date(
+                  $("startTime").value
+                ).toISOString()
+              : null,
+
+          end_time:
+            $("endTime").value
+              ? new Date(
+                  $("endTime").value
+                ).toISOString()
+              : null,
+
+          election_password:
+            electionPassword
+
+        })
+        .select()
+        .single();
+
+
+    if(error){
+
+      showMessage(
+        error.message,
+        true
+      );
+
+      return;
+
+    }
+
+
+    showMessage(
+      "Election created successfully. Password: " +
+      electionPassword
+    );
+
+
+    $("electionTitle").value =
+      "";
+
+    $("electionDescription").value =
+      "";
+
+    $("startTime").value =
+      "";
+
+    $("endTime").value =
+      "";
+
+
+    await loadAll();
+
+
+    setTimeout(function(){
+
+      const electionBox =
+        document.querySelector(
+          `[data-election-id="${data.id}"]`
+        );
+
+      if(electionBox){
+
+        electionBox.scrollIntoView({
+          behavior:"smooth",
+          block:"center"
+        });
+
+      }
+
+    },300);
+
+  };
+
+
+/* =========================
+   LOAD ELECTIONS
+========================= */
+
+async function loadElections(){
+
+  const {
+    data,
+    error
+  } =
+    await db
+      .from("elections")
+      .select("*")
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+  if(error){
+
+    showMessage(
+      error.message,
+      true
+    );
+
+    return;
+
+  }
+
+
+  elections =
+    data || [];
+
+
+  renderElectionSelectors();
+
+  renderElections();
+
+}
+
+
+/* =========================
+   RENDER SELECTORS
+========================= */
+
+function renderElectionSelectors(){
+
+  const selects = [
+
+    $("positionElection"),
+
+    $("candidateElection"),
+
+    $("resultsElection")
+
+  ];
+
+
+  selects.forEach(function(select){
+
+    const current =
+      select.value;
+
+    select.innerHTML =
+      '<option value="">Select election</option>' +
+
+      elections.map(function(e){
+
+        return `
+          <option value="${esc(e.id)}">
+            ${esc(e.title)}
+          </option>
+        `;
+
+      }).join("");
+
+
+    if(
+      elections.some(
+        e => e.id === current
+      )
+    ){
+
+      select.value =
+        current;
+
+    }
+
+  });
+
+}
+
+
+/* =========================
+   RENDER ELECTIONS
+========================= */
+
+function renderElections(){
+
+  const box =
+    $("electionsList");
+
+
+  if(!elections.length){
+
+    box.innerHTML =
+      '<p class="muted">No elections created yet.</p>';
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    elections.map(function(e){
+
+      const password =
+        e.election_password ||
+        "Not generated";
+
+
+      return `
+
+        <div
+          class="item"
+          data-election-id="${esc(e.id)}"
+        >
+
+          <div class="item-head">
+
+            <div>
+
+              <strong>
+                ${esc(e.title)}
+              </strong>
+
+              <p class="muted">
+                ${esc(e.description || "")}
+              </p>
+
+              <span class="badge ${esc(e.status)}">
+                ${esc(
+                  String(e.status || "")
+                    .toUpperCase()
+                )}
+              </span>
+
+            </div>
+
+            <div>
+
+              <button
+                class="btn"
+                onclick="changeStatus('${e.id}','open')"
+                type="button"
+              >
+                Open
+              </button>
+
+              <button
+                class="btn alt"
+                onclick="changeStatus('${e.id}','draft')"
+                type="button"
+              >
+                Draft
+              </button>
+
+              <button
+                class="btn danger"
+                onclick="changeStatus('${e.id}','closed')"
+                type="button"
+              >
+                Close
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="password-box">
+
+            <div class="password-label">
+              ELECTION VOTING PASSWORD
+            </div>
+
+            <div class="password-value">
+              ${esc(password)}
+            </div>
+
+            <div class="password-actions">
+
+              ${
+                e.election_password
+                ?
+                `
+                <button
+                  class="btn"
+                  onclick="copyPassword('${esc(password)}')"
+                  type="button"
+                >
+                  📋 Copy Password
+                </button>
+                `
+                :
+                ""
+              }
+
+              <button
+                class="btn gold"
+                onclick="regeneratePassword('${e.id}')"
+                type="button"
+              >
+                🔄 Generate New Password
+              </button>
+
+            </div>
+
+            <p class="muted">
+              Give this password only to eligible voters.
+              Generating a new password replaces the previous password.
+            </p>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================
+   CHANGE STATUS
+========================= */
+
+async function changeStatus(id,status){
+
+  if(
+    !confirm(
+      "Change election status to " +
+      status.toUpperCase() +
+      "?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  const {
+    error
+  } =
+    await db
+      .from("elections")
+      .update({
+        status:status
+      })
+      .eq("id",id);
+
+
+  if(error){
+
+    showMessage(
+      error.message,
+      true
+    );
+
+    return;
+
+  }
+
+
+  showMessage(
+    "Election status updated."
+  );
+
+
+  await loadAll();
+
+}
+
+
+/* =========================
+   ADD POSITION
+========================= */
+
+$("addPositionBtn").onclick =
+  async function(){
+
+    const electionId =
+      $("positionElection").value;
+
+    const name =
+      $("positionName")
+        .value
+        .trim();
+
+
+    if(!electionId || !name){
+
+      showMessage(
+        "Select an election and enter a position name.",
+        true
+      );
+
+      return;
+
+    }
+
+
+    const {
+      error
+    } =
+      await db
+        .from("election_positions")
+        .insert({
+
+          election_id:
+            electionId,
+
+          name:name,
+
+          description:
+            $("positionDescription")
+              .value
+              .trim(),
+
+          display_order:
+            Number(
+              $("positionOrder").value
+            ) || 0
+
+        });
+
+
+    if(error){
+
+      showMessage(
+        error.message,
+        true
+      );
+
+      return;
+
+    }
+
+
+    showMessage(
+      "Position added successfully."
+    );
+
+
+    $("positionName").value =
+      "";
+
+    $("positionDescription").value =
+      "";
+
+    await loadAll();
+
+  };
+
+
+/* =========================
+   LOAD POSITIONS
+========================= */
+
+async function loadPositions(){
+
+  const {
+    data,
+    error
+  } =
+    await db
+      .from("election_positions")
+      .select("*")
+      .order(
+        "display_order",
+        {
+          ascending:true
+        }
+      );
+
+
+  if(error){
+
+    showMessage(
+      error.message,
+      true
+    );
+
+    return;
+
+  }
+
+
+  positions =
+    data || [];
+
+
+  renderPositionSelector();
+
+  renderStructure();
+
+}
+
+
+/* =========================
+   POSITION SELECTOR
+========================= */
+
+$("candidateElection")
+  .addEventListener(
+    "change",
+    function(){
+
+      renderPositionSelector();
+
+      renderStructure();
+
+    }
+  );
+
+
+$("positionElection")
+  .addEventListener(
+    "change",
+    function(){
+
+      renderStructure();
+
+    }
+  );
+
+
+function renderPositionSelector(){
+
+  const electionId =
+    $("candidateElection").value;
+
+
+  const select =
+    $("candidatePosition");
+
+
+  const list =
+    positions.filter(
+      p =>
+        p.election_id ===
+        electionId
+    );
+
+
+  select.innerHTML =
+    '<option value="">Select position</option>' +
+
+    list.map(function(p){
+
+      return `
+        <option value="${esc(p.id)}">
+          ${esc(p.name)}
+        </option>
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================
+   ADD CANDIDATE
+========================= */
+
+$("addCandidateBtn").onclick =
+  async function(){
+
+    const electionId =
+      $("candidateElection").value;
+
+    const positionId =
+      $("candidatePosition").value;
+
+    const name =
+      $("candidateName")
+        .value
+        .trim();
+
+
+    if(
+      !electionId ||
+      !positionId ||
+      !name
+    ){
+
+      showMessage(
+        "Select election, position and enter candidate name.",
+        true
+      );
+
+      return;
+
+    }
+
+
+    const {
+      error
+    } =
+      await db
+        .from("election_candidates")
+        .insert({
+
+          election_id:
+            electionId,
+
+          position_id:
+            positionId,
+
+          name:name,
+
+          manifesto:
+            $("candidateManifesto")
+              .value
+              .trim(),
+
+          photo_url:
+            $("candidatePhoto")
+              .value
+              .trim() || null
+
+        });
+
+
+    if(error){
+
+      showMessage(
+        error.message,
+        true
+      );
+
+      return;
+
+    }
+
+
+    showMessage(
+      "Candidate added successfully."
+    );
+
+
+    $("candidateName").value =
+      "";
+
+    $("candidateManifesto").value =
+      "";
+
+    $("candidatePhoto").value =
+      "";
+
+    await loadAll();
+
+  };
+
+
+/* =========================
+   LOAD CANDIDATES
+========================= */
+
+async function loadCandidates(){
+
+  const {
+    data,
+    error
+  } =
+    await db
+      .from("election_candidates")
+      .select("*")
+      .order(
+        "created_at",
+        {
+          ascending:true
+        }
+      );
+
+
+  if(error){
+
+    showMessage(
+      error.message,
+      true
+    );
+
+    return;
+
+  }
+
+
+  candidates =
+    data || [];
+
+
+  renderStructure();
+
+}
+
+
+/* =========================
+   STRUCTURE
+========================= */
+
+function renderStructure(){
+
+  const box =
+    $("structure");
+
+
+  const electionId =
+    $("candidateElection").value ||
+    $("positionElection").value;
+
+
+  if(!electionId){
+
+    box.innerHTML =
+      '<p class="muted">Select an election above to view its positions and candidates.</p>';
+
+    return;
+
+  }
+
+
+  const election =
+    elections.find(
+      e => e.id === electionId
+    );
+
+
+  const electionPositions =
+    positions.filter(
+      p =>
+        p.election_id ===
+        electionId
+    );
+
+
+  if(!electionPositions.length){
+
+    box.innerHTML =
+      '<p class="muted">No positions have been added to this election yet.</p>';
+
+    return;
+
+  }
+
+
+  box.innerHTML = `
+
+    <h3>
+      ${esc(election?.title || "Election")}
+    </h3>
+
+    ${
+      electionPositions
+        .map(function(position){
+
+          const list =
+            candidates.filter(
+              c =>
+                c.position_id ===
+                position.id
+            );
+
+
+          return `
+
+            <div class="structure-position">
+
+              <h3>
+                ${esc(position.name)}
+              </h3>
+
+              <p class="muted">
+                ${esc(position.description || "")}
+              </p>
+
+              ${
+                list.length
+                ?
+
+                list.map(function(candidate){
+
+                  return `
+
+                    <div class="candidate">
+
+                      <div class="item-head">
+
+                        <div>
+
+                          <strong>
+                            ${esc(candidate.name)}
+                          </strong>
+
+                          ${
+                            candidate.photo_url
+                            ?
+                            `<p class="small">
+                              Photo: ${esc(candidate.photo_url)}
+                            </p>`
+                            :
+                            ""
+                          }
+
+                        </div>
+
+                        <button
+                          class="btn danger"
+                          onclick="deleteCandidate('${candidate.id}')"
+                          type="button"
+                        >
+                          Delete
+                        </button>
+
+                      </div>
+
+                      ${
+                        candidate.manifesto
+                        ?
+                        `<p class="muted">
+                          ${esc(candidate.manifesto)}
+                        </p>`
+                        :
+                        ""
+                      }
+
+                    </div>
+
+                  `;
+
+                }).join("")
+
+                :
+
+                '<p class="muted">No candidates yet.</p>'
+
+              }
+
+            </div>
+
+          `;
+
+        }).join("")
+    }
+
+  `;
+
+}
+
+
+/* =========================
+   DELETE CANDIDATE
+========================= */
+
+async function deleteCandidate(id){
+
+  if(
+    !confirm(
+      "Delete this candidate?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  const {
+    error
+  } =
+    await db
+      .from("election_candidates")
+      .delete()
+      .eq("id",id);
+
+
+  if(error){
+
+    showMessage(
+      error.message,
+      true
+    );
+
+    return;
+
+  }
+
+
+  showMessage(
+    "Candidate deleted."
+  );
+
+
+  await loadAll();
+
+}
+
+
+/* =========================
+   RESULTS SELECTOR
+========================= */
+
+$("resultsElection")
+  .addEventListener(
+    "change",
+    function(){
+
+      loadResults();
+
+    }
+  );
+
+
+$("refreshResultsBtn").onclick =
+  async function(){
+
+    await loadResults();
+
+  };
+
+
+/* =========================
+   LOAD RESULTS
+========================= */
+
+async function loadResults(){
+
+  const electionId =
+    $("resultsElection").value;
+
+
+  $("resultsContent")
+    .classList
+    .add("hidden");
+
+  $("resultsLoading")
+    .classList
+    .add("hidden");
+
+  $("noResults")
+    .className =
+      "no-results";
+
+
+  if(!electionId){
+
+    $("noResults").textContent =
+      "Select an election to view results.";
+
+    $("noResults")
+      .classList
+      .remove("hidden");
+
+    currentResults = null;
+
+    return;
+
+  }
+
+
+  $("noResults")
+    .classList
+    .add("hidden");
+
+  $("resultsLoading")
+    .classList
+    .remove("hidden");
+
+
+  try{
+
+    /* POSITIONS */
+
+    const {
+      data:positionData,
+      error:positionError
+    } =
+      await db
+        .from("election_positions")
+        .select("*")
+        .eq(
+          "election_id",
+          electionId
+        )
+        .order(
+          "display_order",
+          {
+            ascending:true
+          }
+        );
+
+
+    if(positionError){
+
+      throw positionError;
+
+    }
+
+
+    /* CANDIDATES */
+
+    const {
+      data:candidateData,
+      error:candidateError
+    } =
+      await db
+        .from("election_candidates")
+        .select("*")
+        .eq(
+          "election_id",
+          electionId
+        )
+        .order(
+          "created_at",
+          {
+            ascending:true
+          }
+        );
+
+
+    if(candidateError){
+
+      throw candidateError;
+
+    }
+
+
+    /* VOTES */
+
+    const {
+      data:voteData,
+      error:voteError
+    } =
+      await db
+        .from("election_votes")
+        .select(
+          "id,candidate_id,voter_id,position_id"
+        )
+        .eq(
+          "election_id",
+          electionId
+        );
+
+
+    if(voteError){
+
+      throw voteError;
+
+    }
+
+
+    /* REGISTERED VOTERS */
+
+    const {
+      data:voterData,
+      error:voterError
+    } =
+      await db
+        .from("election_voters")
+        .select(
+          "id,voter_reference,has_voted"
+        )
+        .eq(
+          "election_id",
+          electionId
+        );
+
+
+    if(voterError){
+
+      throw voterError;
+
+    }
+
+
+    const selectedPositions =
+      positionData || [];
+
+    const selectedCandidates =
+      candidateData || [];
+
+    const votes =
+      voteData || [];
+
+    const voters =
+      voterData || [];
+
+
+    /* COUNT CANDIDATE VOTES */
+
+    const voteCounts = {};
+
+
+    votes.forEach(function(vote){
+
+      const candidateId =
+        vote.candidate_id;
+
+      if(candidateId){
+
+        voteCounts[candidateId] =
+          (voteCounts[candidateId] || 0) + 1;
+
+      }
+
+    });
+
+
+    /* VOTER COUNTS */
+
+    const registeredCount =
+      voters.length;
+
+    const votedVoters =
+      voters.filter(
+        voter =>
+          voter.has_voted === true
+      );
+
+    const votedCount =
+      votedVoters.length;
+
+
+    /*
+      Fallback in case has_voted data
+      is unavailable or not yet updated.
+    */
+
+    const uniqueVoteVoters =
+      new Set(
+        votes
+          .map(v => v.voter_id)
+          .filter(Boolean)
+      );
+
+
+    const actualVotedCount =
+      Math.max(
+        votedCount,
+        uniqueVoteVoters.size
+      );
+
+
+    const turnout =
+      registeredCount > 0
+      ?
+      (
+        actualVotedCount /
+        registeredCount
+      ) * 100
+      :
+      0;
+
+
+    /* SUMMARY */
+
+    $("totalVotes").textContent =
+      votes.length;
+
+    $("registeredVoters").textContent =
+      registeredCount;
+
+    $("votersWhoVoted").textContent =
+      actualVotedCount;
+
+    $("positionsCount").textContent =
+      selectedPositions.length;
+
+
+    $("turnoutText").textContent =
+      turnout.toFixed(1) +
+      "% turnout • " +
+      actualVotedCount +
+      " of " +
+      registeredCount +
+      " voters";
+
+
+    $("turnoutFill").style.width =
+      Math.min(
+        turnout,
+        100
+      ).toFixed(1) +
+      "%";
+
+
+    /* SAVE RESULTS FOR CSV */
+
+    currentResults = {
+
+      electionId,
+
+      positions:
+        selectedPositions,
+
+      candidates:
+        selectedCandidates,
+
+      votes,
+
+      voters,
+
+      voteCounts,
+
+      registeredCount,
+
+      actualVotedCount,
+
+      turnout
+
+    };
+
+
+    /* RENDER RESULTS */
+
+    renderResults(
+      selectedPositions,
+      selectedCandidates,
+      voteCounts
+    );
+
+
+    /* RENDER VOTER STATUS */
+
+    renderVoterStatus(
+      voters
+    );
+
+
+    $("resultsLoading")
+      .classList
+      .add("hidden");
+
+    $("resultsContent")
+      .classList
+      .remove("hidden");
+
+
+  }catch(error){
+
+    console.error(
+      "Results error:",
+      error
+    );
+
+
+    $("resultsLoading")
+      .classList
+      .add("hidden");
+
+    $("resultsContent")
+      .classList
+      .add("hidden");
+
+    $("noResults")
+      .className =
+        "no-results error";
+
+    $("noResults").textContent =
+      "Unable to load results: " +
+      (
+        error.message ||
+        "Unknown error."
+      );
+
+    $("noResults")
+      .classList
+      .remove("hidden");
+
+  }
+
+}
+
+
+/* =========================
+   RENDER RESULTS
+========================= */
+
+function renderResults(
+  selectedPositions,
+  selectedCandidates,
+  voteCounts
+){
+
+  const resultsBox =
+    $("resultsList");
+
+
+  if(!selectedPositions.length){
+
+    resultsBox.innerHTML = `
+
+      <div class="no-results">
+
+        No positions have been added to this election.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  resultsBox.innerHTML =
+    selectedPositions.map(
+      function(position){
+
+        const positionCandidates =
+          selectedCandidates.filter(
+            candidate =>
+              candidate.position_id ===
+              position.id
+          );
+
+
+        const positionVoteTotal =
+          positionCandidates.reduce(
+            function(total,candidate){
+
+              return total +
+                (
+                  voteCounts[candidate.id]
+                  || 0
+                );
+
+            },
+            0
+          );
+
+
+        if(!positionCandidates.length){
+
+          return `
+
+            <div class="result-position">
+
+              <div class="result-position-title">
+                ${esc(position.name)}
+              </div>
+
+              <div class="no-results">
+                No candidates for this position.
+              </div>
+
+            </div>
+
+          `;
+
+        }
+
+
+        const sorted =
+          [...positionCandidates].sort(
+            function(a,b){
+
+              return (
+                (voteCounts[b.id] || 0) -
+                (voteCounts[a.id] || 0)
+              );
+
+            }
+          );
+
+
+        const highestVotes =
+          Math.max(
+            ...sorted.map(
+              candidate =>
+                voteCounts[candidate.id] || 0
+            )
+          );
+
+
+        return `
+
+          <div class="result-position">
+
+            <div class="result-position-title">
+
+              ${esc(position.name)}
+
+              <span
+                style="
+                  float:right;
+                  font-size:12px;
+                  font-weight:normal;
+                  opacity:.8;
+                "
+              >
+                ${positionVoteTotal}
+                vote${positionVoteTotal === 1 ? "" : "s"}
+              </span>
+
+            </div>
+
+
+            ${
+              sorted.map(
+                function(candidate){
+
+                  const count =
+                    voteCounts[candidate.id]
+                    || 0;
+
+
+                  const percentage =
+                    positionVoteTotal > 0
+                    ?
+                    (
+                      count /
+                      positionVoteTotal
+                    ) * 100
+                    :
+                    0;
+
+
+                  const isLeading =
+                    count === highestVotes &&
+                    count > 0;
+
+
+                  return `
+
+                    <div class="result-candidate">
+
+                      <div class="result-head">
+
+                        <div class="result-name">
+
+                          ${esc(candidate.name)}
+
+                          ${
+                            isLeading
+                            ?
+                            `<span class="leading">
+                              HIGHEST TOTAL
+                            </span>`
+                            :
+                            ""
+                          }
+
+                        </div>
+
+                        <div class="result-votes">
+
+                          ${count}
+                          vote${count === 1 ? "" : "s"}
+
+                        </div>
+
+                      </div>
+
+
+                      <div class="result-bar">
+
+                        <div
+                          class="result-fill"
+                          style="
+                            width:${percentage.toFixed(1)}%;
+                          "
+                        ></div>
+
+                      </div>
+
+
+                      <div class="result-percent">
+
+                        ${percentage.toFixed(1)}%
+
+                      </div>
+
+                    </div>
+
+                  `;
+
+                }
+              ).join("")
+            }
+
+          </div>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+/* =========================
+   VOTER STATUS
+========================= */
+
+function renderVoterStatus(voters){
+
+  const table =
+    $("voterStatusTable");
+
+
+  if(!voters.length){
+
+    table.innerHTML = `
+
+      <tr>
+
+        <td colspan="2">
+          No registered voters found.
+        </td>
+
+      </tr>
+
+    `;
+
+    $("voterStatusSummary").textContent =
+      "No registered voters found.";
+
+    return;
+
+  }
+
+
+  const voted =
+    voters.filter(
+      voter =>
+        voter.has_voted === true
+    ).length;
+
+
+  const notVoted =
+    voters.length -
+    voted;
+
+
+  $("voterStatusSummary").textContent =
+    voted +
+    " voter(s) have voted • " +
+    notVoted +
+    " voter(s) have not voted.";
+
+
+  table.innerHTML =
+    voters.map(
+      function(voter){
+
+        return `
+
+          <tr>
+
+            <td>
+              ${esc(
+                voter.voter_reference ||
+                "—"
+              )}
+            </td>
+
+            <td>
+
+              ${
+                voter.has_voted === true
+                ?
+
+                `<span class="voted">
+                  ✓ Voted
+                </span>`
+
+                :
+
+                `<span class="not-voted">
+                  ○ Not Voted
+                </span>`
+              }
+
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+/* =========================
+   EXPORT RESULTS CSV
+========================= */
+
+$("exportResultsBtn").onclick =
+  function(){
+
+    if(!currentResults){
+
+      alert(
+        "Please select an election and load its results first."
+      );
+
+      return;
+
+    }
+
+
+    const {
+
+      electionId,
+      positions,
+      candidates,
+      voteCounts,
+      voters,
+      registeredCount,
+      actualVotedCount,
+      turnout
+
+    } =
+      currentResults;
+
+
+    const election =
+      elections.find(
+        e =>
+          e.id === electionId
+      );
+
+
+    const rows = [];
+
+
+    rows.push([
+      "NANUS KWASU ELECTION RESULTS"
+    ]);
+
+
+    rows.push([
+      "Election",
+      election?.title || ""
+    ]);
+
+
+    rows.push([
+      "Registered Voters",
+      registeredCount
+    ]);
+
+
+    rows.push([
+      "Voters Who Voted",
+      actualVotedCount
+    ]);
+
+
+    rows.push([
+      "Turnout",
+      turnout.toFixed(1) + "%"
+    ]);
+
+
+    rows.push([]);
+
+
+    rows.push([
+      "Position",
+      "Candidate",
+      "Votes",
+      "Percentage"
+    ]);
+
+
+    positions.forEach(
+      function(position){
+
+        const positionCandidates =
+          candidates.filter(
+            candidate =>
+              candidate.position_id ===
+              position.id
+          );
+
+
+        const total =
+          positionCandidates.reduce(
+            function(sum,candidate){
+
+              return sum +
+                (
+                  voteCounts[candidate.id]
+                  || 0
+                );
+
+            },
+            0
+          );
+
+
+        positionCandidates.forEach(
+          function(candidate){
+
+            const count =
+              voteCounts[candidate.id]
+              || 0;
+
+
+            const percentage =
+              total > 0
+              ?
+              (
+                count /
+                total
+              ) * 100
+              :
+              0;
+
+
+            rows.push([
+
+              position.name,
+
+              candidate.name,
+
+              count,
+
+              percentage.toFixed(1) + "%"
+
+            ]);
+
+          }
+        );
+
+      }
+    );
+
+
+    rows.push([]);
+
+    rows.push([
+      "VOTER STATUS"
+    ]);
+
+    rows.push([
+      "Voter Reference",
+      "Status"
+    ]);
+
+
+    voters.forEach(
+      function(voter){
+
+        rows.push([
+
+          voter.voter_reference || "",
+
+          voter.has_voted === true
+            ? "Voted"
+            : "Not Voted"
+
+        ]);
+
+      }
+    );
+
+
+    const csv =
+      rows
+        .map(
+          row =>
+            row
+              .map(csvEscape)
+              .join(",")
+        )
+        .join("\n");
+
+
+    const safeTitle =
+      String(
+        election?.title ||
+        "NANUS-Election"
+      )
+      .replace(
+        /[^a-z0-9]+/gi,
+        "-"
+      )
+      .replace(
+        /^-+|-+$/g,
+        ""
+      );
+
+
+    downloadFile(
+      safeTitle +
+      "-results.csv",
+      csv
+    );
+
+
+    showMessage(
+      "Results CSV exported successfully."
+    );
+
+  };
+
+
+/* =========================
+   LOAD EVERYTHING
+========================= */
+
+async function loadAll(){
+
+  await loadElections();
+
+  await loadPositions();
+
+  await loadCandidates();
+
+}
+
+
+init();
+
+</script>
+
+</body>
+</html>
