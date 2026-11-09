@@ -1,8 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NANUS Admin Dashboard</title>
 
 <style>
@@ -50,9 +50,7 @@ body{
   margin-bottom:18px
 }
 
-h1{
-  margin-top:0
-}
+h1{margin-top:0}
 
 .grid{
   display:grid;
@@ -78,9 +76,7 @@ label{
   margin:12px 0 5px
 }
 
-input,
-textarea,
-select{
+input,textarea,select{
   width:100%;
   padding:11px;
   border:1px solid #ccd8d2;
@@ -88,9 +84,7 @@ select{
   font:inherit
 }
 
-textarea{
-  min-height:110px
-}
+textarea{min-height:110px}
 
 input[type="checkbox"]{
   width:auto;
@@ -118,13 +112,8 @@ input[type="file"]{
   cursor:not-allowed
 }
 
-.btn.alt{
-  background:#66736d
-}
-
-.btn.danger{
-  background:#9d2c2c
-}
+.btn.alt{background:#66736d}
+.btn.danger{background:#9d2c2c}
 
 .row{
   display:flex;
@@ -141,9 +130,7 @@ input[type="file"]{
   gap:15px
 }
 
-.hidden{
-  display:none
-}
+.hidden{display:none}
 
 .muted{
   color:var(--muted);
@@ -162,9 +149,7 @@ input[type="file"]{
   color:#8b2525
 }
 
-/* NEWS IMAGE PREVIEW */
-
-.news-preview{
+.news-preview,.gallery-preview{
   width:100%;
   max-width:500px;
   margin-top:12px;
@@ -174,29 +159,10 @@ input[type="file"]{
   background:#f5f7f6
 }
 
-.news-preview img{
+.news-preview img,.gallery-preview img{
   width:100%;
   display:block;
   max-height:300px;
-  object-fit:cover
-}
-
-/* GALLERY */
-
-.gallery-preview{
-  width:100%;
-  max-width:400px;
-  margin-top:12px;
-  border-radius:12px;
-  overflow:hidden;
-  border:1px solid var(--line);
-  background:#f5f7f6
-}
-
-.gallery-preview img{
-  width:100%;
-  display:block;
-  max-height:280px;
   object-fit:cover
 }
 
@@ -221,9 +187,7 @@ input[type="file"]{
   display:block
 }
 
-.gallery-info{
-  padding:12px
-}
+.gallery-info{padding:12px}
 
 .gallery-info strong{
   display:block;
@@ -231,39 +195,15 @@ input[type="file"]{
 }
 
 @media(max-width:750px){
-
-  .grid{
-    grid-template-columns:1fr 1fr
-  }
-
-  .top{
-    gap:10px
-  }
-
-  .item{
-    display:block
-  }
-
-  .gallery-grid{
-    grid-template-columns:1fr 1fr
-  }
-
+  .grid{grid-template-columns:1fr 1fr}
+  .top{gap:10px}
+  .item{display:block}
+  .gallery-grid{grid-template-columns:1fr 1fr}
 }
 
 @media(max-width:480px){
-
-  .grid{
-    grid-template-columns:1fr
-  }
-
-  .gallery-grid{
-    grid-template-columns:1fr
-  }
-
-  .gallery-card img{
-    height:220px
-  }
-
+  .grid,.gallery-grid{grid-template-columns:1fr}
+  .gallery-card img{height:220px}
 }
 </style>
 </head>
@@ -287,7 +227,6 @@ Use an authorized NANUS administrator account.
 </p>
 
 <label for="email">Email</label>
-
 <input
   id="email"
   type="email"
@@ -296,7 +235,6 @@ Use an authorized NANUS administrator account.
 >
 
 <label for="password">Password</label>
-
 <input
   id="password"
   type="password"
@@ -304,14 +242,20 @@ Use an authorized NANUS administrator account.
   placeholder="Enter password"
 >
 
-<button
-  class="btn"
-  id="loginBtn"
->
+<button class="btn" id="loginBtn">
 Sign in
 </button>
 
 <div id="loginMsg" class="muted"></div>
+
+<!-- FORGOT PASSWORD -->
+<button
+  type="button"
+  class="btn alt"
+  id="forgotPasswordBtn"
+>
+Forgot Password?
+</button>
 
 </div>
 
@@ -322,18 +266,13 @@ Sign in
 <div class="panel">
 
 <div class="row">
-
 <h1 style="margin-right:auto">
 Content Dashboard
 </h1>
 
-<button
-  class="btn alt"
-  id="logoutBtn"
->
+<button class="btn alt" id="logoutBtn">
 Sign out
 </button>
-
 </div>
 
 <div id="msg" class="notice hidden"></div>
@@ -341,31 +280,26 @@ Sign out
 <div class="grid">
 
 <div class="stat">
-<span>Published news</span>
-<br>
+<span>Published news</span><br>
 <b id="newsCount">0</b>
 </div>
 
 <div class="stat">
-<span>Published events</span>
-<br>
+<span>Published events</span><br>
 <b id="eventCount">0</b>
 </div>
 
 <div class="stat">
-<span>Gallery photos</span>
-<br>
+<span>Gallery photos</span><br>
 <b id="galleryCount">0</b>
 </div>
 
 <div class="stat">
-<span>Admin status</span>
-<br>
+<span>Admin status</span><br>
 <b>Active</b>
 </div>
 
 </div>
-
 </div>
 
 
@@ -374,78 +308,31 @@ Sign out
 
 <h2>Create News Post</h2>
 
-<label for="postTitle">
-Title
-</label>
+<label for="postTitle">Title</label>
+<input id="postTitle" type="text" placeholder="News title">
 
-<input
-  id="postTitle"
-  type="text"
-  placeholder="News title"
->
+<label for="postCategory">Category</label>
+<input id="postCategory" type="text" placeholder="Announcement">
 
-<label for="postCategory">
-Category
-</label>
+<label for="postExcerpt">Excerpt</label>
+<textarea id="postExcerpt" placeholder="Short description"></textarea>
 
-<input
-  id="postCategory"
-  type="text"
-  placeholder="Announcement"
->
+<label for="postBody">Body</label>
+<textarea id="postBody" placeholder="Full article text"></textarea>
 
-<label for="postExcerpt">
-Excerpt
-</label>
+<label for="postImage">News Image</label>
+<input id="postImage" type="file" accept="image/*">
 
-<textarea
-  id="postExcerpt"
-  placeholder="Short description"
-></textarea>
-
-<label for="postBody">
-Body
-</label>
-
-<textarea
-  id="postBody"
-  placeholder="Full article text"
-></textarea>
-
-<!-- NEWS IMAGE -->
-
-<label for="postImage">
-News Image
-</label>
-
-<input
-  id="postImage"
-  type="file"
-  accept="image/*"
->
-
-<div
-  id="postImagePreview"
-  class="news-preview hidden"
->
-<img
-  id="postPreviewImage"
-  alt="Selected news image preview"
->
+<div id="postImagePreview" class="news-preview hidden">
+<img id="postPreviewImage" alt="Selected news image preview">
 </div>
 
 <label>
-<input
-  id="postPublished"
-  type="checkbox"
->
+<input id="postPublished" type="checkbox">
 Publish immediately
 </label>
 
-<button
-  class="btn"
-  id="addPost"
->
+<button class="btn" id="addPost">
 Add News
 </button>
 
@@ -457,46 +344,21 @@ Add News
 
 <h2>Create Event</h2>
 
-<label for="eventTitle">
-Event title
-</label>
+<label for="eventTitle">Event title</label>
+<input id="eventTitle" type="text" placeholder="Event title">
 
-<input
-  id="eventTitle"
-  type="text"
-  placeholder="Event title"
->
+<label for="eventDate">Date</label>
+<input id="eventDate" type="date">
 
-<label for="eventDate">
-Date
-</label>
-
-<input
-  id="eventDate"
-  type="date"
->
-
-<label for="eventDescription">
-Description
-</label>
-
-<textarea
-  id="eventDescription"
-  placeholder="Event description"
-></textarea>
+<label for="eventDescription">Description</label>
+<textarea id="eventDescription" placeholder="Event description"></textarea>
 
 <label>
-<input
-  id="eventPublished"
-  type="checkbox"
->
+<input id="eventPublished" type="checkbox">
 Publish immediately
 </label>
 
-<button
-  class="btn"
-  id="addEvent"
->
+<button class="btn" id="addEvent">
 Add Event
 </button>
 
@@ -512,49 +374,22 @@ Add Event
 Upload photos of NANUS activities, cultural events, meetings and other chapter activities.
 </p>
 
-<label for="galleryImage">
-Select Photo
-</label>
+<label for="galleryImage">Select Photo</label>
+<input id="galleryImage" type="file" accept="image/*">
 
-<input
-  id="galleryImage"
-  type="file"
-  accept="image/*"
->
-
-<div
-  id="galleryPreview"
-  class="gallery-preview hidden"
->
-<img
-  id="previewImage"
-  alt="Selected image preview"
->
+<div id="galleryPreview" class="gallery-preview hidden">
+<img id="previewImage" alt="Selected image preview">
 </div>
 
-<label for="galleryTitle">
-Photo Title / Caption
-</label>
-
-<input
-  id="galleryTitle"
-  type="text"
-  placeholder="e.g. NANUS Annual Nupe Day"
->
+<label for="galleryTitle">Photo Title / Caption</label>
+<input id="galleryTitle" type="text" placeholder="e.g. NANUS Annual Nupe Day">
 
 <label>
-<input
-  id="galleryPublished"
-  type="checkbox"
-  checked
->
+<input id="galleryPublished" type="checkbox" checked>
 Publish immediately
 </label>
 
-<button
-  class="btn"
-  id="uploadGallery"
->
+<button class="btn" id="uploadGallery">
 Upload Photo
 </button>
 
@@ -565,64 +400,40 @@ Upload Photo
 <div class="panel">
 
 <div class="row">
+<h2 style="margin-right:auto">Gallery Photos</h2>
 
-<h2 style="margin-right:auto">
-Gallery Photos
-</h2>
-
-<button
-  class="btn alt"
-  id="refreshGallery"
->
+<button class="btn alt" id="refreshGallery">
 Refresh
 </button>
-
 </div>
 
 <div id="galleryList">
-
-<p class="muted">
-No gallery photos yet.
-</p>
-
+<p class="muted">No gallery photos yet.</p>
 </div>
 
 </div>
 
 
-<!-- NEWS -->
+<!-- NEWS LIST -->
 <div class="panel">
-
 <h2>Recent News</h2>
 
 <div id="posts">
-
-<p class="muted">
-No posts yet.
-</p>
-
+<p class="muted">No posts yet.</p>
 </div>
-
 </div>
 
 
-<!-- EVENTS -->
+<!-- EVENTS LIST -->
 <div class="panel">
-
 <h2>Upcoming Events</h2>
 
 <div id="events">
-
-<p class="muted">
-No events yet.
-</p>
-
+<p class="muted">No events yet.</p>
+</div>
 </div>
 
 </div>
-
-</div>
-
 </div>
 
 
@@ -635,16 +446,14 @@ No events yet.
 ========================================= */
 
 const SUPABASE_URL =
-  "https://risxjzdxrtzhlkwxhhzm.supabase.co";
+"https://risxjzdxrtzhlkwxhhzm.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_x9ZKrx8ilp1_Nj4F8U_i5A__eTKwWFx";
-
+"sb_publishable_x9ZKrx8ilp1_Nj4F8U_i5A__eTKwWFx";
 
 let db = null;
 
-const $ = id =>
-  document.getElementById(id);
+const $ = id => document.getElementById(id);
 
 
 /* =========================================
@@ -655,11 +464,10 @@ function startSupabase(){
 
   try{
 
-    db =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-      );
+    db = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
     $("loginBtn").disabled = false;
 
@@ -670,7 +478,7 @@ function startSupabase(){
     console.error(error);
 
     $("loginMsg").textContent =
-      "Unable to connect to Supabase.";
+    "Unable to connect to Supabase.";
 
   }
 
@@ -685,24 +493,16 @@ async function checkSession(){
 
   if(!db) return;
 
-  const {
-    data,
-    error
-  } =
-    await db.auth.getSession();
+  const {data,error} =
+  await db.auth.getSession();
 
   if(error){
-
     console.error(error);
-
     return;
-
   }
 
   if(data.session){
-
     openDash();
-
   }
 
 }
@@ -740,74 +540,121 @@ function closeDash(){
    LOGIN
 ========================================= */
 
-$("loginBtn").onclick =
-async function(){
+$("loginBtn").onclick = async function(){
 
   if(!db){
 
     $("loginMsg").textContent =
-      "Supabase is not connected.";
+    "Supabase is not connected.";
 
     return;
 
   }
 
-  const email =
-    $("email").value.trim();
+  const email = $("email").value.trim();
 
-  const password =
-    $("password").value;
-
+  const password = $("password").value;
 
   if(!email || !password){
 
     $("loginMsg").textContent =
-      "Please enter your email and password.";
+    "Please enter your email and password.";
 
     return;
 
   }
 
-
   $("loginBtn").disabled = true;
 
-  $("loginMsg").textContent =
-    "Signing in...";
+  $("loginMsg").textContent = "Signing in...";
 
+  try{
 
-  const {
-    data,
-    error
-  } =
+    const {error} =
     await db.auth.signInWithPassword({
-
       email:email,
-
       password:password
-
     });
 
+    if(error) throw error;
 
-  if(error){
+    $("loginMsg").textContent =
+    "Login successful.";
+
+    await openDash();
+
+  }catch(error){
+
+    console.error(error);
+
+    $("loginMsg").textContent = error.message;
+
+  }
+
+  $("loginBtn").disabled = false;
+
+};
+
+
+/* =========================================
+   FORGOT PASSWORD
+========================================= */
+
+$("forgotPasswordBtn").onclick = async function(){
+
+  if(!db){
+
+    $("loginMsg").textContent =
+    "Supabase is not connected.";
+
+    return;
+
+  }
+
+  const email = $("email").value.trim();
+
+  if(!email){
+
+    $("loginMsg").textContent =
+    "Please enter your email address first.";
+
+    $("email").focus();
+
+    return;
+
+  }
+
+  $("forgotPasswordBtn").disabled = true;
+
+  $("loginMsg").textContent =
+  "Sending password reset link...";
+
+  try{
+
+    const {error} =
+    await db.auth.resetPasswordForEmail(
+      email,
+      {
+        redirectTo:
+        "https://officialnanuskwasu.vercel.app/reset-password.html"
+      }
+    );
+
+    if(error) throw error;
+
+    $("loginMsg").textContent =
+    "Password reset link sent. Please check your email.";
+
+  }catch(error){
 
     console.error(error);
 
     $("loginMsg").textContent =
-      error.message;
-
-    $("loginBtn").disabled = false;
-
-    return;
+    "Unable to send reset link: " + error.message;
 
   }
 
-
-  $("loginMsg").textContent =
-    "Login successful.";
-
-  await openDash();
-
-  $("loginBtn").disabled = false;
+  $("forgotPasswordBtn").disabled = false;
 
 };
 
@@ -824,13 +671,9 @@ function listenAuth(){
     (_event,session)=>{
 
       if(session){
-
         openDash();
-
       }else{
-
         closeDash();
-
       }
 
     }
@@ -843,22 +686,12 @@ function listenAuth(){
    LOGOUT
 ========================================= */
 
-$("logoutBtn").onclick =
-async function(){
+$("logoutBtn").onclick = async function(){
 
-  const {
-    error
-  } =
-    await db.auth.signOut();
-
+  const {error} = await db.auth.signOut();
 
   if(error){
-
-    showMessage(
-      error.message,
-      true
-    );
-
+    showMessage(error.message,true);
   }
 
 };
@@ -868,25 +701,16 @@ async function(){
    MESSAGE
 ========================================= */
 
-function showMessage(
-  message,
-  isError=false
-){
+function showMessage(message,isError=false){
 
-  const box =
-    $("msg");
+  const box = $("msg");
 
-  box.textContent =
-    message;
+  box.textContent = message;
 
   box.className =
-    isError
-    ? "notice error"
-    : "notice";
+  isError ? "notice error" : "notice";
 
-  box.classList.remove(
-    "hidden"
-  );
+  box.classList.remove("hidden");
 
 }
 
@@ -895,306 +719,184 @@ function showMessage(
    NEWS IMAGE PREVIEW
 ========================================= */
 
-$("postImage").addEventListener(
-  "change",
-  function(){
+$("postImage").addEventListener("change",function(){
 
-    const file =
-      this.files[0];
+  const file = this.files[0];
 
-    if(!file){
+  if(!file){
 
-      $("postImagePreview")
-        .classList.add("hidden");
+    $("postImagePreview").classList.add("hidden");
 
-      $("postPreviewImage").src = "";
+    $("postPreviewImage").src = "";
 
-      return;
-
-    }
-
-
-    if(!file.type.startsWith("image/")){
-
-      showMessage(
-        "Please select a valid image file.",
-        true
-      );
-
-      this.value = "";
-
-      return;
-
-    }
-
-
-    const reader =
-      new FileReader();
-
-    reader.onload =
-      function(e){
-
-        $("postPreviewImage").src =
-          e.target.result;
-
-        $("postImagePreview")
-          .classList.remove("hidden");
-
-      };
-
-    reader.readAsDataURL(file);
+    return;
 
   }
-);
+
+  if(!file.type.startsWith("image/")){
+
+    showMessage("Please select a valid image file.",true);
+
+    this.value = "";
+
+    return;
+
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+
+    $("postPreviewImage").src = e.target.result;
+
+    $("postImagePreview").classList.remove("hidden");
+
+  };
+
+  reader.readAsDataURL(file);
+
+});
 
 
 /* =========================================
    ADD NEWS
 ========================================= */
 
-$("addPost").onclick =
-async function(){
+$("addPost").onclick = async function(){
 
-  const title =
-    $("postTitle").value.trim();
+  const title = $("postTitle").value.trim();
 
   const category =
-    $("postCategory").value.trim()
-    || "News";
+  $("postCategory").value.trim() || "News";
 
-  const excerpt =
-    $("postExcerpt").value.trim();
+  const excerpt = $("postExcerpt").value.trim();
 
-  const body =
-    $("postBody").value.trim();
+  const body = $("postBody").value.trim();
 
-  const imageFile =
-    $("postImage").files[0];
+  const imageFile = $("postImage").files[0];
 
-  const published =
-    $("postPublished").checked;
-
+  const published = $("postPublished").checked;
 
   if(!title){
 
-    showMessage(
-      "Please enter a news title.",
-      true
-    );
+    showMessage("Please enter a news title.",true);
 
     return;
 
   }
 
-
-  const {
-    data:{user}
-  } =
-    await db.auth.getUser();
-
+  const {data:{user}} = await db.auth.getUser();
 
   if(!user){
 
-    showMessage(
-      "Please sign in again.",
-      true
-    );
+    showMessage("Please sign in again.",true);
 
     return;
 
   }
 
-
-  $("addPost").disabled =
-    true;
+  $("addPost").disabled = true;
 
   $("addPost").textContent =
-    imageFile
-    ? "Uploading..."
-    : "Saving...";
-
+  imageFile ? "Uploading..." : "Saving...";
 
   let imageUrl = null;
 
   let uploadedFilePath = null;
 
-
   try{
-
-    /* UPLOAD NEWS IMAGE */
 
     if(imageFile){
 
       if(!imageFile.type.startsWith("image/")){
-
-        throw new Error(
-          "Please select a valid image file."
-        );
-
+        throw new Error("Please select a valid image file.");
       }
-
 
       const extension =
-        imageFile.name
-          .split(".")
-          .pop()
-          .toLowerCase();
-
+      imageFile.name.split(".").pop().toLowerCase();
 
       const fileName =
-        Date.now()
-        + "-"
-        + Math.random()
-            .toString(36)
-            .substring(2,8)
-        + "."
-        + extension;
+      Date.now() + "-" +
+      Math.random().toString(36).substring(2,8) +
+      "." + extension;
 
+      uploadedFilePath = fileName;
 
-      uploadedFilePath =
-        fileName;
-
-
-      const {
-        error:uploadError
-      } =
-        await db
-          .storage
-          .from("news-images")
-          .upload(
-            uploadedFilePath,
-            imageFile,
-            {
-              cacheControl:"3600",
-              upsert:false,
-              contentType:imageFile.type
-            }
-          );
-
+      const {error:uploadError} =
+      await db.storage
+        .from("news-images")
+        .upload(uploadedFilePath,imageFile,{
+          cacheControl:"3600",
+          upsert:false,
+          contentType:imageFile.type
+        });
 
       if(uploadError){
-
-        throw new Error(
-          "News image upload failed: "
-          + uploadError.message
-        );
-
+        throw new Error("News image upload failed: " + uploadError.message);
       }
 
+      const {data:publicData} =
+      db.storage
+        .from("news-images")
+        .getPublicUrl(uploadedFilePath);
 
-      const {
-        data:publicData
-      } =
-        db
-          .storage
-          .from("news-images")
-          .getPublicUrl(
-            uploadedFilePath
-          );
-
-
-      imageUrl =
-        publicData.publicUrl;
+      imageUrl = publicData.publicUrl;
 
     }
 
+    const {error} =
+    await db.from("posts").insert({
 
-    /* SAVE NEWS POST */
+      title:title,
+      category:category,
+      excerpt:excerpt,
+      body:body,
+      published:published,
+      author_id:user.id,
+      image_url:imageUrl
 
-    const {
-      error
-    } =
-    await db
-      .from("posts")
-      .insert({
-
-        title:title,
-
-        category:category,
-
-        excerpt:excerpt,
-
-        body:body,
-
-        published:published,
-
-        author_id:user.id,
-
-        image_url:imageUrl
-
-      });
-
+    });
 
     if(error){
 
-      /* REMOVE IMAGE IF DATABASE SAVE FAILS */
-
       if(uploadedFilePath){
 
-        await db
-          .storage
+        await db.storage
           .from("news-images")
-          .remove([
-            uploadedFilePath
-          ]);
+          .remove([uploadedFilePath]);
 
       }
 
-
-      throw new Error(
-        "Could not save news: "
-        + error.message
-      );
+      throw new Error("Could not save news: " + error.message);
 
     }
 
-
-    showMessage(
-      "News post saved successfully."
-    );
-
-
-    /* RESET FORM */
+    showMessage("News post saved successfully.");
 
     $("postTitle").value = "";
-
     $("postCategory").value = "";
-
     $("postExcerpt").value = "";
-
     $("postBody").value = "";
-
     $("postImage").value = "";
+    $("postPublished").checked = false;
 
-    $("postPublished").checked =
-      false;
-
-    $("postImagePreview")
-      .classList.add("hidden");
+    $("postImagePreview").classList.add("hidden");
 
     $("postPreviewImage").src = "";
 
-
     await load();
-
 
   }catch(error){
 
     console.error(error);
 
-    showMessage(
-      error.message,
-      true
-    );
+    showMessage(error.message,true);
 
   }
 
+  $("addPost").disabled = false;
 
-  $("addPost").disabled =
-    false;
-
-  $("addPost").textContent =
-    "Add News";
+  $("addPost").textContent = "Add News";
 
 };
 
@@ -1203,106 +905,61 @@ async function(){
    ADD EVENT
 ========================================= */
 
-$("addEvent").onclick =
-async function(){
+$("addEvent").onclick = async function(){
 
-  const title =
-    $("eventTitle").value.trim();
+  const title = $("eventTitle").value.trim();
 
-  const date =
-    $("eventDate").value;
+  const date = $("eventDate").value;
 
   const description =
-    $("eventDescription")
-      .value.trim();
+  $("eventDescription").value.trim();
 
-  const published =
-    $("eventPublished").checked;
-
+  const published = $("eventPublished").checked;
 
   if(!title){
 
-    showMessage(
-      "Please enter an event title.",
-      true
-    );
+    showMessage("Please enter an event title.",true);
 
     return;
 
   }
 
-
-  const {
-    data:{user}
-  } =
-    await db.auth.getUser();
-
+  const {data:{user}} = await db.auth.getUser();
 
   if(!user){
 
-    showMessage(
-      "Please sign in again.",
-      true
-    );
+    showMessage("Please sign in again.",true);
 
     return;
 
   }
 
+  const {error} = await db.from("events").insert({
 
-  const {
-    error
-  } =
-    await db
-      .from("events")
-      .insert({
+    title:title,
+    event_date:date || null,
+    description:description,
+    published:published,
+    author_id:user.id
 
-        title:title,
-
-        event_date:
-          date || null,
-
-        description:
-          description,
-
-        published:
-          published,
-
-        author_id:
-          user.id
-
-      });
-
+  });
 
   if(error){
 
     console.error(error);
 
-    showMessage(
-      "Could not save event: "
-      + error.message,
-      true
-    );
+    showMessage("Could not save event: " + error.message,true);
 
     return;
 
   }
 
-
-  showMessage(
-    "Event saved successfully."
-  );
-
+  showMessage("Event saved successfully.");
 
   $("eventTitle").value = "";
-
   $("eventDate").value = "";
-
   $("eventDescription").value = "";
-
-  $("eventPublished").checked =
-    false;
-
+  $("eventPublished").checked = false;
 
   await load();
 
@@ -1313,241 +970,149 @@ async function(){
    GALLERY IMAGE PREVIEW
 ========================================= */
 
-$("galleryImage").addEventListener(
-  "change",
-  function(){
+$("galleryImage").addEventListener("change",function(){
 
-    const file =
-      this.files[0];
+  const file = this.files[0];
 
-    if(!file){
+  if(!file){
 
-      $("galleryPreview")
-        .classList.add("hidden");
+    $("galleryPreview").classList.add("hidden");
 
-      return;
-
-    }
-
-    if(!file.type.startsWith("image/")){
-
-      showMessage(
-        "Please select an image file.",
-        true
-      );
-
-      this.value = "";
-
-      return;
-
-    }
-
-    const reader =
-      new FileReader();
-
-    reader.onload =
-      function(e){
-
-        $("previewImage").src =
-          e.target.result;
-
-        $("galleryPreview")
-          .classList.remove("hidden");
-
-      };
-
-    reader.readAsDataURL(file);
+    return;
 
   }
-);
+
+  if(!file.type.startsWith("image/")){
+
+    showMessage("Please select an image file.",true);
+
+    this.value = "";
+
+    return;
+
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+
+    $("previewImage").src = e.target.result;
+
+    $("galleryPreview").classList.remove("hidden");
+
+  };
+
+  reader.readAsDataURL(file);
+
+});
 
 
 /* =========================================
    UPLOAD GALLERY PHOTO
 ========================================= */
 
-$("uploadGallery").onclick =
-async function(){
+$("uploadGallery").onclick = async function(){
 
-  const file =
-    $("galleryImage").files[0];
+  const file = $("galleryImage").files[0];
 
-  const title =
-    $("galleryTitle").value.trim();
+  const title = $("galleryTitle").value.trim();
 
-  const published =
-    $("galleryPublished").checked;
-
+  const published = $("galleryPublished").checked;
 
   if(!file){
 
-    showMessage(
-      "Please select a photo first.",
-      true
-    );
+    showMessage("Please select a photo first.",true);
 
     return;
 
   }
-
 
   if(!file.type.startsWith("image/")){
 
-    showMessage(
-      "Please select a valid image file.",
-      true
-    );
+    showMessage("Please select a valid image file.",true);
 
     return;
 
   }
 
-
-  const {
-    data:{user}
-  } =
-    await db.auth.getUser();
-
+  const {data:{user}} = await db.auth.getUser();
 
   if(!user){
 
-    showMessage(
-      "Please sign in again.",
-      true
-    );
+    showMessage("Please sign in again.",true);
 
     return;
 
   }
 
+  $("uploadGallery").disabled = true;
 
-  $("uploadGallery").disabled =
-    true;
-
-  $("uploadGallery").textContent =
-    "Uploading...";
-
+  $("uploadGallery").textContent = "Uploading...";
 
   try{
 
     const extension =
-      file.name
-        .split(".")
-        .pop()
-        .toLowerCase();
+    file.name.split(".").pop().toLowerCase();
 
     const fileName =
-      Date.now()
-      + "-"
-      + Math.random()
-          .toString(36)
-          .substring(2,8)
-      + "."
-      + extension;
+    Date.now() + "-" +
+    Math.random().toString(36).substring(2,8) +
+    "." + extension;
 
+    const filePath = fileName;
 
-    const filePath =
-      fileName;
-
-
-    const {
-      error:uploadError
-    } =
-      await db
-        .storage
-        .from("gallery")
-        .upload(
-          filePath,
-          file,
-          {
-            cacheControl:"3600",
-            upsert:false,
-            contentType:file.type
-          }
-        );
-
+    const {error:uploadError} =
+    await db.storage
+      .from("gallery")
+      .upload(filePath,file,{
+        cacheControl:"3600",
+        upsert:false,
+        contentType:file.type
+      });
 
     if(uploadError){
-
-      console.error(uploadError);
-
-      throw new Error(
-        "Image upload failed: "
-        + uploadError.message
-      );
-
+      throw new Error("Image upload failed: " + uploadError.message);
     }
 
+    const {data:publicData} =
+    db.storage
+      .from("gallery")
+      .getPublicUrl(filePath);
 
-    const {
-      data:publicData
-    } =
-      db
-        .storage
-        .from("gallery")
-        .getPublicUrl(filePath);
+    const imageUrl = publicData.publicUrl;
 
+    const {error:databaseError} =
+    await db.from("gallery").insert({
 
-    const imageUrl =
-      publicData.publicUrl;
+      title:title || "NANUS Activity",
+      image_url:imageUrl,
+      published:published,
+      author_id:user.id
 
-
-    const {
-      error:databaseError
-    } =
-      await db
-        .from("gallery")
-        .insert({
-
-          title:
-            title || "NANUS Activity",
-
-          image_url:
-            imageUrl,
-
-          published:
-            published,
-
-          author_id:
-            user.id
-
-        });
-
+    });
 
     if(databaseError){
 
-      console.error(databaseError);
-
-      await db
-        .storage
+      await db.storage
         .from("gallery")
         .remove([filePath]);
 
       throw new Error(
-        "Could not save gallery information: "
-        + databaseError.message
+        "Could not save gallery information: " +
+        databaseError.message
       );
 
     }
 
-
-    showMessage(
-      "Gallery photo uploaded successfully."
-    );
-
+    showMessage("Gallery photo uploaded successfully.");
 
     $("galleryImage").value = "";
-
     $("galleryTitle").value = "";
+    $("galleryPublished").checked = true;
 
-    $("galleryPublished").checked =
-      true;
-
-    $("galleryPreview")
-      .classList.add("hidden");
+    $("galleryPreview").classList.add("hidden");
 
     $("previewImage").src = "";
-
 
     await loadGallery();
 
@@ -1555,19 +1120,13 @@ async function(){
 
     console.error(error);
 
-    showMessage(
-      error.message,
-      true
-    );
+    showMessage(error.message,true);
 
   }
 
+  $("uploadGallery").disabled = false;
 
-  $("uploadGallery").disabled =
-    false;
-
-  $("uploadGallery").textContent =
-    "Upload Photo";
+  $("uploadGallery").textContent = "Upload Photo";
 
 };
 
@@ -1580,106 +1139,73 @@ async function loadGallery(){
 
   if(!db) return;
 
-
-  const {
-    data,
-    error
-  } =
-    await db
-      .from("gallery")
-      .select("*")
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      );
-
+  const {data,error} =
+  await db.from("gallery")
+    .select("*")
+    .order("created_at",{ascending:false});
 
   if(error){
 
     console.error(error);
 
     $("galleryList").innerHTML =
-      '<p class="muted">Unable to load gallery.</p>';
+    '<p class="muted">Unable to load gallery.</p>';
 
     return;
 
   }
 
-
-  const gallery =
-    data || [];
-
+  const gallery = data || [];
 
   $("galleryCount").textContent =
-    gallery.filter(
-      x=>x.published
-    ).length;
-
+  gallery.filter(x=>x.published).length;
 
   if(!gallery.length){
 
     $("galleryList").innerHTML =
-      '<p class="muted">No gallery photos yet.</p>';
+    '<p class="muted">No gallery photos yet.</p>';
 
     return;
 
   }
 
-
   $("galleryList").innerHTML =
+  '<div class="gallery-grid">' +
 
-    '<div class="gallery-grid">' +
+  gallery.map(x=>`
 
-    gallery.map(
-      x=>`
+    <div class="gallery-card">
 
-      <div class="gallery-card">
+      <img
+        src="${esc(x.image_url)}"
+        alt="${esc(x.title || "NANUS Gallery")}"
+        loading="lazy"
+      >
 
-        <img
-          src="${esc(x.image_url)}"
-          alt="${esc(
-            x.title || "NANUS Gallery"
-          )}"
-          loading="lazy"
+      <div class="gallery-info">
+
+        <strong>${esc(x.title || "NANUS Activity")}</strong>
+
+        <span class="muted">
+          ${x.published ? "Published" : "Draft"}
+        </span>
+
+        <br>
+
+        <button
+          class="btn danger"
+          onclick="delGallery('${x.id}','${encodeURIComponent(x.image_url || "")}')"
         >
-
-        <div class="gallery-info">
-
-          <strong>
-            ${esc(
-              x.title || "NANUS Activity"
-            )}
-          </strong>
-
-          <span class="muted">
-
-            ${
-              x.published
-              ? "Published"
-              : "Draft"
-            }
-
-          </span>
-
-          <br>
-
-          <button
-            class="btn danger"
-            onclick="delGallery('${x.id}','${encodeURIComponent(x.image_url || "")}')"
-          >
-            Delete
-          </button>
-
-        </div>
+          Delete
+        </button>
 
       </div>
 
-      `
-    ).join("") +
+    </div>
 
-    "</div>";
+  `).join("") +
+
+  "</div>";
 
 }
 
@@ -1688,62 +1214,34 @@ async function loadGallery(){
    DELETE GALLERY PHOTO
 ========================================= */
 
-async function delGallery(
-  id,
-  encodedUrl
-){
+async function delGallery(id,encodedUrl){
 
-  if(
-    !confirm(
-      "Delete this gallery photo?"
-    )
-  ) return;
+  if(!confirm("Delete this gallery photo?")) return;
 
-
-  const imageUrl =
-    decodeURIComponent(
-      encodedUrl
-    );
-
+  const imageUrl = decodeURIComponent(encodedUrl);
 
   try{
 
     const marker =
-      "/storage/v1/object/public/gallery/";
+    "/storage/v1/object/public/gallery/";
 
-    const position =
-      imageUrl.indexOf(marker);
-
+    const position = imageUrl.indexOf(marker);
 
     if(position !== -1){
 
       const filePath =
-        imageUrl
-          .substring(
-            position + marker.length
-          );
+      imageUrl.substring(position + marker.length);
 
-
-      const {
-        error:storageError
-      } =
-        await db
-          .storage
-          .from("gallery")
-          .remove([
-            filePath
-          ]);
-
+      const {error:storageError} =
+      await db.storage
+        .from("gallery")
+        .remove([filePath]);
 
       if(storageError){
 
-        console.error(
-          storageError
-        );
-
         showMessage(
-          "Could not delete image from Storage: "
-          + storageError.message,
+          "Could not delete image from Storage: " +
+          storageError.message,
           true
         );
 
@@ -1753,26 +1251,15 @@ async function delGallery(
 
     }
 
-
-    const {
-      error
-    } =
-      await db
-        .from("gallery")
-        .delete()
-        .eq(
-          "id",
-          id
-        );
-
+    const {error} =
+    await db.from("gallery")
+      .delete()
+      .eq("id",id);
 
     if(error){
 
-      console.error(error);
-
       showMessage(
-        "Could not delete gallery record: "
-        + error.message,
+        "Could not delete gallery record: " + error.message,
         true
       );
 
@@ -1780,11 +1267,7 @@ async function delGallery(
 
     }
 
-
-    showMessage(
-      "Gallery photo deleted."
-    );
-
+    showMessage("Gallery photo deleted.");
 
     await loadGallery();
 
@@ -1793,8 +1276,7 @@ async function delGallery(
     console.error(error);
 
     showMessage(
-      "Could not delete gallery photo: "
-      + error.message,
+      "Could not delete gallery photo: " + error.message,
       true
     );
 
@@ -1807,8 +1289,7 @@ async function delGallery(
    REFRESH GALLERY
 ========================================= */
 
-$("refreshGallery").onclick =
-async function(){
+$("refreshGallery").onclick = async function(){
 
   await loadGallery();
 
@@ -1823,104 +1304,70 @@ async function load(){
 
   if(!db) return;
 
-
   const postsResult =
-    await db
-      .from("posts")
-      .select("*")
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      )
-      .limit(20);
-
+  await db.from("posts")
+    .select("*")
+    .order("created_at",{ascending:false})
+    .limit(20);
 
   const eventsResult =
-    await db
-      .from("events")
-      .select("*")
-      .order(
-        "event_date",
-        {
-          ascending:true
-        }
-      )
-      .limit(20);
+  await db.from("events")
+    .select("*")
+    .order("event_date",{ascending:true})
+    .limit(20);
 
 
   /* NEWS */
 
   if(postsResult.error){
 
-    console.error(
-      postsResult.error
-    );
+    console.error(postsResult.error);
 
     $("posts").innerHTML =
-      '<p class="muted">Unable to load news.</p>';
+    '<p class="muted">Unable to load news.</p>';
 
   }else{
 
-    const posts =
-      postsResult.data || [];
-
+    const posts = postsResult.data || [];
 
     $("newsCount").textContent =
-      posts.filter(
-        x=>x.published
-      ).length;
-
+    posts.filter(x=>x.published).length;
 
     $("posts").innerHTML =
-      posts.map(
-        x=>`
+    posts.map(x=>`
 
-        <div class="item">
+      <div class="item">
 
-          <div>
+        <div>
 
-            <strong>
-              ${esc(x.title)}
-            </strong>
+          <strong>${esc(x.title)}</strong>
 
-            <br>
+          <br>
 
-            <span class="muted">
+          <span class="muted">
 
-              ${esc(
-                x.category || "News"
-              )}
+            ${esc(x.category || "News")}
 
-              •
+            •
 
-              ${
-                x.published
-                ? "Published"
-                : "Draft"
-              }
+            ${x.published ? "Published" : "Draft"}
 
-            </span>
-
-          </div>
-
-
-          <button
-            class="btn danger"
-            onclick="delPost('${x.id}')"
-          >
-            Delete
-          </button>
+          </span>
 
         </div>
 
-        `
-      ).join("")
+        <button
+          class="btn danger"
+          onclick="delPost('${x.id}')"
+        >
+          Delete
+        </button>
 
-      ||
+      </div>
 
-      '<p class="muted">No posts yet.</p>';
+    `).join("") ||
+
+    '<p class="muted">No posts yet.</p>';
 
   }
 
@@ -1929,76 +1376,55 @@ async function load(){
 
   if(eventsResult.error){
 
-    console.error(
-      eventsResult.error
-    );
+    console.error(eventsResult.error);
 
     $("events").innerHTML =
-      '<p class="muted">Unable to load events.</p>';
+    '<p class="muted">Unable to load events.</p>';
 
   }else{
 
-    const events =
-      eventsResult.data || [];
-
+    const events = eventsResult.data || [];
 
     $("eventCount").textContent =
-      events.filter(
-        x=>x.published
-      ).length;
-
+    events.filter(x=>x.published).length;
 
     $("events").innerHTML =
-      events.map(
-        x=>`
+    events.map(x=>`
 
-        <div class="item">
+      <div class="item">
 
-          <div>
+        <div>
 
-            <strong>
-              ${esc(x.title)}
-            </strong>
+          <strong>${esc(x.title)}</strong>
 
-            <br>
+          <br>
 
-            <span class="muted">
+          <span class="muted">
 
-              ${esc(
-                x.event_date || "No date"
-              )}
+            ${esc(x.event_date || "No date")}
 
-              •
+            •
 
-              ${
-                x.published
-                ? "Published"
-                : "Draft"
-              }
+            ${x.published ? "Published" : "Draft"}
 
-            </span>
-
-          </div>
-
-
-          <button
-            class="btn danger"
-            onclick="delEvent('${x.id}')"
-          >
-            Delete
-          </button>
+          </span>
 
         </div>
 
-        `
-      ).join("")
+        <button
+          class="btn danger"
+          onclick="delEvent('${x.id}')"
+        >
+          Delete
+        </button>
 
-      ||
+      </div>
 
-      '<p class="muted">No events yet.</p>';
+    `).join("") ||
+
+    '<p class="muted">No events yet.</p>';
 
   }
-
 
   await loadGallery();
 
@@ -2011,9 +1437,7 @@ async function load(){
 
 function esc(value){
 
-  return String(
-    value ?? ""
-  ).replace(
+  return String(value ?? "").replace(
     /[&<>"']/g,
 
     m=>({
@@ -2037,75 +1461,42 @@ function esc(value){
 
 async function delPost(id){
 
-  if(
-    !confirm(
-      "Delete this post?"
-    )
-  ) return;
-
+  if(!confirm("Delete this post?")) return;
 
   try{
 
-    /* GET POST IMAGE URL */
-
-    const {
-      data:post,
-      error:fetchError
-    } =
-      await db
-        .from("posts")
-        .select("image_url")
-        .eq("id",id)
-        .single();
-
+    const {data:post,error:fetchError} =
+    await db.from("posts")
+      .select("image_url")
+      .eq("id",id)
+      .single();
 
     if(fetchError){
-
       console.error(fetchError);
-
     }
-
-
-    /* DELETE NEWS IMAGE FROM STORAGE */
 
     if(post && post.image_url){
 
       const marker =
-        "/storage/v1/object/public/news-images/";
+      "/storage/v1/object/public/news-images/";
 
-      const position =
-        post.image_url.indexOf(marker);
-
+      const position = post.image_url.indexOf(marker);
 
       if(position !== -1){
 
         const filePath =
-          post.image_url
-            .substring(
-              position + marker.length
-            );
+        post.image_url.substring(position + marker.length);
 
-
-        const {
-          error:storageError
-        } =
-          await db
-            .storage
-            .from("news-images")
-            .remove([
-              filePath
-            ]);
-
+        const {error:storageError} =
+        await db.storage
+          .from("news-images")
+          .remove([filePath]);
 
         if(storageError){
 
-          console.error(
-            storageError
-          );
-
           showMessage(
-            "Could not delete news image: "
-            + storageError.message,
+            "Could not delete news image: " +
+            storageError.message,
             true
           );
 
@@ -2117,26 +1508,15 @@ async function delPost(id){
 
     }
 
-
-    /* DELETE NEWS RECORD */
-
-    const {
-      error
-    } =
-      await db
-        .from("posts")
-        .delete()
-        .eq(
-          "id",
-          id
-        );
-
+    const {error} =
+    await db.from("posts")
+      .delete()
+      .eq("id",id);
 
     if(error){
 
       showMessage(
-        "Could not delete post: "
-        + error.message,
+        "Could not delete post: " + error.message,
         true
       );
 
@@ -2144,11 +1524,7 @@ async function delPost(id){
 
     }
 
-
-    showMessage(
-      "News post deleted."
-    );
-
+    showMessage("News post deleted.");
 
     await load();
 
@@ -2157,8 +1533,7 @@ async function delPost(id){
     console.error(error);
 
     showMessage(
-      "Could not delete post: "
-      + error.message,
+      "Could not delete post: " + error.message,
       true
     );
 
@@ -2173,30 +1548,17 @@ async function delPost(id){
 
 async function delEvent(id){
 
-  if(
-    !confirm(
-      "Delete this event?"
-    )
-  ) return;
+  if(!confirm("Delete this event?")) return;
 
-
-  const {
-    error
-  } =
-    await db
-      .from("events")
-      .delete()
-      .eq(
-        "id",
-        id
-      );
-
+  const {error} =
+  await db.from("events")
+    .delete()
+    .eq("id",id);
 
   if(error){
 
     showMessage(
-      "Could not delete event: "
-      + error.message,
+      "Could not delete event: " + error.message,
       true
     );
 
@@ -2204,11 +1566,7 @@ async function delEvent(id){
 
   }
 
-
-  showMessage(
-    "Event deleted."
-  );
-
+  showMessage("Event deleted.");
 
   await load();
 
